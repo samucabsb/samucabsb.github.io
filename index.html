@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Samuel Rodrigues — AI & Software Developer | Residente em IA (Instituto ELDORADO / UnB). Arquiteturas RAG, FastAPI, ChromaDB, Agentes de IA e Engenharia de Software.">
+  <title>SAMUEL RODRIGUES — AI & Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #ffffff;
+      --black: #050505;
+      --card-bg: #f8f8f9;
+      --border: #e5e7eb;
+      --border-dark: #121212;
+      --accent: #f59e0b; /* Amber tensor */
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --text-muted: #64748b;
+      --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--black);
+      font-family: var(--font-display);
+      overflow-x: hidden;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Canvas do Campo Vetorial Matemático (GPU Composited, Zero Alpha Overhead) */
+    #vector-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Navigation Bar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 2px solid var(--black);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+    }
+    .status-pill {
+      background: var(--black);
+      color: var(--bg);
+      padding: 5px 12px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-pill::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+    .telemetry {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .telemetry span b {
+      color: var(--black);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 76px 0 60px 0;
+    }
+    .hero-meta {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+    .hero-meta span::before { content: '■'; font-size: 8px; color: var(--accent); }
+
+    .hero-identity {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding: 8px 18px 8px 14px;
+      background: rgba(248, 248, 249, 0.94);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      flex-wrap: wrap;
+    }
+    .identity-name {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.6vw, 32px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--black);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .identity-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--bg);
+      background: var(--black);
+      padding: 4px 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+      font-size: clamp(46px, 8.5vw, 104px);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -3px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    .hero-title .invert-block {
+      display: inline-block;
+      background: var(--black);
+      color: var(--bg);
+      padding: 2px 20px;
+      margin: 4px 0;
+      transform: rotate(-0.5deg);
+    }
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      align-items: flex-end;
+      gap: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.5;
+      font-weight: 500;
+      color: #1e293b;
+    }
+    .quick-specs {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.9;
+      background: rgba(248, 248, 249, 0.92);
+      border: 1px solid var(--border);
+      padding: 18px 24px;
+    }
+    .quick-specs .spec-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--border);
+      padding: 4px 0;
+      gap: 12px;
+    }
+    .quick-specs .spec-row:last-child { border-bottom: none; }
+    .quick-specs span { color: var(--text-muted); }
+    .quick-specs b { color: var(--black); text-align: right; }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .btn-action.primary {
+      background: var(--black);
+      color: var(--bg);
+      border: 2px solid var(--black);
+    }
+    .btn-action.primary:hover {
+      background: transparent;
+      color: var(--black);
+    }
+    .btn-action.secondary {
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--black);
+      border: 2px solid var(--black);
+    }
+    .btn-action.secondary:hover {
+      background: var(--black);
+      color: var(--bg);
+    }
+
+    /* Infinite Marquee Tape */
+    .marquee-strip {
+      position: relative;
+      z-index: 2;
+      background: var(--black);
+      color: var(--bg);
+      padding: 14px 0;
+      margin: 44px 0 84px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+    }
+    .marquee-inner {
+      display: inline-block;
+      will-change: transform;
+      animation: marquee 28s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    /* Section Headers */
+    .section-header {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Blueprint Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--black);
+      color: var(--bg);
+      border-color: var(--black);
+    }
+
+    /* Blueprint Table Rows */
+    .project-list {
+      border-bottom: 2px solid var(--black);
+      margin-bottom: 88px;
+    }
+    .project-row {
+      border-top: 2px solid var(--black);
+      padding: 24px 0;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .project-row:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .row-header {
+      display: grid;
+      grid-template-columns: 72px 2.2fr 1.6fr 110px;
+      align-items: center;
+      gap: 16px;
+    }
+    .p-idx {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+    .p-title {
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: -0.7px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .p-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 3px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.5px;
+    }
+    .p-metrics {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #334155;
+    }
+    .p-toggle {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Acordeão Blueprint Expandido */
+    .blueprint-body {
+      display: none;
+      padding: 24px 16px 12px 72px;
+      border-top: 1px dashed var(--border);
+      margin-top: 20px;
+    }
+    .project-row.expanded {
+      background: rgba(250, 250, 250, 0.94);
+    }
+    .project-row.expanded .blueprint-body {
+      display: block;
+    }
+    .project-row.expanded .p-toggle {
+      color: var(--accent);
+    }
+
+    .blueprint-grid {
+      display: grid;
+      grid-template-columns: 1.75fr 1.25fr;
+      gap: 32px;
+    }
+    .bp-desc {
+      font-size: 15.5px;
+      color: #334155;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .bp-spec-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 18px 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+    .bp-spec-box .spec-line {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--border);
+      padding: 3px 0;
+      gap: 12px;
+    }
+    .bp-spec-box .spec-line:last-child { border-bottom: none; }
+    .bp-spec-box span { color: var(--text-muted); }
+    .bp-spec-box b { color: var(--black); text-align: right; }
+
+    .bp-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .bp-link {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid var(--black);
+      padding: 8px 16px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .bp-link:hover {
+      background: var(--black);
+      color: var(--bg);
+    }
+
+    /* Computational Matrix / Stack */
+    .stack-section {
+      margin-bottom: 88px;
+    }
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .stack-card {
+      background: rgba(248, 248, 249, 0.92);
+      border: 1px solid var(--border);
+      padding: 28px;
+    }
+    .stack-header {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .stack-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stack-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 2px;
+      color: #334155;
+    }
+
+    /* Trajectory & Credentials Matrix (Recruiter Verification Section) */
+    .trajectory-section {
+      margin-bottom: 88px;
+    }
+    .trajectory-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .traj-card {
+      background: rgba(248, 248, 249, 0.92);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--black);
+      padding: 28px;
+    }
+    .traj-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .traj-meta span.active-badge {
+      color: var(--emerald);
+    }
+    .traj-role {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .traj-org {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .traj-desc {
+      font-size: 14.5px;
+      color: #334155;
+      line-height: 1.6;
+    }
+    .cred-list {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .cred-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      gap: 12px;
+    }
+    .cred-item a {
+      color: var(--black);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      white-space: nowrap;
+    }
+    .cred-item a:hover {
+      background: var(--black);
+      color: var(--bg);
+    }
+
+    /* Bloco Preto de Contato */
+    .cta-card {
+      background: var(--black);
+      color: var(--bg);
+      padding: 80px 64px;
+      margin-bottom: 88px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 36px;
+    }
+    .cta-title {
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+    }
+    .cta-title span { color: var(--accent); }
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .cta-btn {
+      background: var(--bg);
+      color: var(--black);
+      padding: 16px 32px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.15s;
+      border: 2px solid var(--bg);
+      cursor: pointer;
+    }
+    .cta-btn:hover {
+      background: transparent;
+      color: var(--bg);
+    }
+    .cta-btn.copy-btn {
+      background: transparent;
+      color: var(--bg);
+      border: 2px solid var(--bg);
+    }
+    .cta-btn.copy-btn:hover {
+      background: var(--bg);
+      color: var(--black);
+    }
+
+    /* Toast Notification */
+    .toast-pill {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--black);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 12px 20px;
+      z-index: 100;
+      transform: translate3d(0, 100px, 0);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s;
+    }
+    .toast-pill.show {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+
+    footer {
+      padding: 36px 0 64px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 900px) {
+      .hero-bottom { grid-template-columns: 1fr; }
+      .row-header { grid-template-columns: 48px 1fr auto; }
+      .p-metrics { display: none; }
+      .blueprint-body { padding-left: 0; padding-right: 0; }
+      .blueprint-grid { grid-template-columns: 1fr; }
+      .stack-grid { grid-template-columns: 1fr; }
+      .trajectory-grid { grid-template-columns: 1fr; }
+      .telemetry { display: none; }
+      .cta-card { padding: 48px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas de Tensores e Campo Vetorial Matemático (Batched 2-Draw-Call Engine) -->
+  <canvas id="vector-canvas"></canvas>
+
+  <div class="container">
+    <nav>
+      <div class="nav-brand">
+        <span class="status-pill">AI RESIDENT // ELDORADO · UnB</span>
+      </div>
+      <div class="telemetry">
+        <span>FPS: <b id="tel-fps">120</b></span>
+        <span id="tel-coords">X: 0000 Y: 0000</span>
+        <span>STATUS: <b style="color:var(--emerald);">OPEN_TO_WORK</b></span>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-identity">
+        <span class="identity-name">SAMUEL RODRIGUES</span>
+        <span class="identity-badge">AI &amp; SOFTWARE DEVELOPER</span>
+      </div>
+      <div class="hero-meta">
+        <span>[RESIDENTE EM IA @ ELDORADO / UnB]</span>
+        <span>PYTHON · RAG · FASTAPI · AGENTES</span>
+        <span>BRASÍLIA, DF // REMOTO (INGLÊS C1)</span>
+      </div>
+      <h1 class="hero-title">
+        APPLIED<br>
+        <span class="invert-block">AI SYSTEMS</span><br>
+        & BACKEND
+      </h1>
+      <div class="hero-bottom">
+        <div>
+          <p class="hero-desc">
+            Desenvolvedor de Software e Engenheiro de IA atuando como Residente no Instituto de Pesquisas ELDORADO em parceria com a Universidade de Brasília (UnB). Construo aplicações com IA Generativa, recuperação semântica (RAG), bancos vetoriais e APIs performáticas em Python e FastAPI.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn-action primary">Inspecionar Projetos ↓</a>
+            <button class="btn-action secondary" onclick="copyContact()">Copiar E-mail</button>
+            <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="btn-action secondary">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="btn-action secondary">LinkedIn ↗</a>
+          </div>
+        </div>
+        <div class="quick-specs">
+          <div class="spec-row"><span>RESIDÊNCIA ATUAL:</span> <b>ELDORADO / UnB (PBIA)</b></div>
+          <div class="spec-row"><span>GRADUAÇÃO (ADS):</span> <b>Média 9.3/10 (3x Top 1)</b></div>
+          <div class="spec-row"><span>CERTIFICAÇÃO:</span> <b>Oracle Agentic AI Assoc.</b></div>
+          <div class="spec-row"><span>IDIOMA:</span> <b>Inglês C1 (Fluente)</b></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      PYTHON & FASTAPI BACKEND • RAG SEMANTIC RETRIEVAL • CHROMADB VECTOR STORE • ORACLE AGENTIC AI • MODEL CONTEXT PROTOCOL (MCP) • LANGCHAIN • DOCKER CONTAINERS • MLFLOW GOVERNANCE • 237+ AUTOMATED TESTS • 
+      PYTHON & FASTAPI BACKEND • RAG SEMANTIC RETRIEVAL • CHROMADB VECTOR STORE • ORACLE AGENTIC AI • MODEL CONTEXT PROTOCOL (MCP) • LANGCHAIN • DOCKER CONTAINERS • MLFLOW GOVERNANCE • 237+ AUTOMATED TESTS • 
+    </div>
+  </div>
+
+  <!-- SEÇÃO 01: PROJETOS TÉCNICOS DE ENGENHARIA (100% REPOSITÓRIOS E ENTREGAS REAIS) -->
+  <div class="container" id="projects">
+    <div class="section-header">
+      <span>01 // SELECTED ENGINEERING PROJECTS & CODEBASES</span>
+      <span>[CLICK ROW TO INSPECT TECHNICAL BLUEPRINT]</span>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterProjects('all', this)">[ALL PROJECTS]</button>
+      <button class="filter-btn" onclick="filterProjects('vector', this)">[RAG & VECTOR]</button>
+      <button class="filter-btn" onclick="filterProjects('agents', this)">[AGENTS & LLM]</button>
+      <button class="filter-btn" onclick="filterProjects('inference', this)">[BACKEND & VISION]</button>
+    </div>
+
+    <div class="project-list">
+      <!-- Projeto 01: SUSANNA -->
+      <div class="project-row expanded" data-cat="vector" onclick="toggleRow(this)">
+        <div class="row-header">
+          <div class="p-idx">/01</div>
+          <div class="p-title">
+            SUSANNA-Healthcheck (Assistente RAG SUS-DF)
+            <span class="p-tag">RAG & VECTOR</span>
+          </div>
+          <div class="p-metrics">383 UBSs | 237 Testes Automatizados</div>
+          <div class="p-toggle">[COLLAPSE -]</div>
+        </div>
+        <div class="blueprint-body">
+          <div class="blueprint-grid">
+            <div>
+              <p class="bp-desc">
+                Assistente virtual de saúde pública desenvolvida no Challenge 1 da Residência em IA (Instituto ELDORADO / Lab Livre UnB Gama). Localiza 383 unidades básicas de saúde nas 33 Regiões Administrativas do DF por distância, recomenda vacinas segundo o PNI e gerencia lembretes clínicos. Atuei diretamente na engenharia e curadoria do corpus de dados públicos, validação de guardrails clínicos (bloqueio estrito de diagnósticos/posologia com orientação ao SAMU 192/UBS) e anonimização de PII (LGPD).
+              </p>
+              <div class="bp-links">
+                <a href="https://github.com/Andre-Atlas/SUSANNA-HEALTHCHECK" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Repositório no GitHub →</a>
+                <a href="https://andre-atlas.github.io/SUSANNA-HEALTHCHECK/" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Documentação & Fluxogramas →</a>
+              </div>
+            </div>
+            <div class="bp-spec-box">
+              <div class="spec-line"><span>BACKEND & RAG:</span> <b>Python + FastAPI + ChromaDB</b></div>
+              <div class="spec-line"><span>OPS & FRONTEND:</span> <b>Docker + MLflow + Next.js</b></div>
+              <div class="spec-line"><span>TEST COVERAGE:</span> <b>237 Testes Automatizados</b></div>
+              <div class="spec-line"><span>MINHA ATUAÇÃO:</span> <b>Eng. de Corpus & Guardrails</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 02: CHECKPOINT -->
+      <div class="project-row" data-cat="inference" onclick="toggleRow(this)">
+        <div class="row-header">
+          <div class="p-idx">/02</div>
+          <div class="p-title">
+            Checkpoint (Full Stack & Persistent Queue Engine)
+            <span class="p-tag">BACKEND & QUEUE</span>
+          </div>
+          <div class="p-metrics">Fila Persistente | Concorrência Isolada</div>
+          <div class="p-toggle">[EXPAND +]</div>
+        </div>
+        <div class="blueprint-body">
+          <div class="blueprint-grid">
+            <div>
+              <p class="bp-desc">
+                Rede social e catálogo interativo para gamers inspirado no Letterboxd, desenvolvido como projeto integrador full stack. Conta com autenticação JWT, avaliações, listas, feed social e controle avançado de concorrência utilizando fila persistente em banco de dados, processamento assíncrono via worker em processo separado e resolução determinística de conflitos simultâneos validada por suíte de testes automatizados.
+              </p>
+              <div class="bp-links">
+                <a href="https://github.com/samucabsb/uni-project-checkpoint" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Repositório no GitHub →</a>
+                <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Perfil GitHub →</a>
+              </div>
+            </div>
+            <div class="bp-spec-box">
+              <div class="spec-line"><span>BACKEND:</span> <b>Node.js + Express + TypeScript</b></div>
+              <div class="spec-line"><span>PERSISTÊNCIA:</span> <b>PostgreSQL / SQLite + Prisma ORM</b></div>
+              <div class="spec-line"><span>CONCORRÊNCIA:</span> <b>Worker Isolado + DB Queue</b></div>
+              <div class="spec-line"><span>FRONTEND:</span> <b>React + Autenticação JWT</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 03: DETECÇÃO DE PLACAS / VISÃO COMPUTACIONAL -->
+      <div class="project-row" data-cat="inference" onclick="toggleRow(this)">
+        <div class="row-header">
+          <div class="p-idx">/03</div>
+          <div class="p-title">
+            ALPR Vehicle Plate Recognition System
+            <span class="p-tag">COMPUTER VISION</span>
+          </div>
+          <div class="p-metrics">Reconhecimento de Imagem | OCR & IA</div>
+          <div class="p-toggle">[EXPAND +]</div>
+        </div>
+        <div class="blueprint-body">
+          <div class="blueprint-grid">
+            <div>
+              <p class="bp-desc">
+                Sistema de Inteligência Artificial voltado à segurança pública para detecção e reconhecimento automático de placas de veículos roubados a partir de imagens. Desenvolvido durante a graduação em Análise e Desenvolvimento de Sistemas, integrando pipeline de pré-processamento visual, localização de caracteres e validação contra base de registros.
+              </p>
+              <div class="bp-links">
+                <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Explorar GitHub →</a>
+                <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Ver Publicação no LinkedIn →</a>
+              </div>
+            </div>
+            <div class="bp-spec-box">
+              <div class="spec-line"><span>DOMÍNIO:</span> <b>Visão Computacional & OCR</b></div>
+              <div class="spec-line"><span>LINGUAGEM:</span> <b>Python + Image Processing</b></div>
+              <div class="spec-line"><span>APLICAÇÃO:</span> <b>Detecção de Veículos Roubados</b></div>
+              <div class="spec-line"><span>CONTEXTO:</span> <b>Projeto Prático UniEuro</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 04: AGENTIC AI & EDUCATHON IBM/ELDORADO -->
+      <div class="project-row" data-cat="agents" onclick="toggleRow(this)">
+        <div class="row-header">
+          <div class="p-idx">/04</div>
+          <div class="p-title">
+            Agentic AI & GenAI Software Workflows
+            <span class="p-tag">AGENTS & LLM</span>
+          </div>
+          <div class="p-metrics">Oracle OCI + IBM Educathon (watsonx)</div>
+          <div class="p-toggle">[EXPAND +]</div>
+        </div>
+        <div class="blueprint-body">
+          <div class="blueprint-grid">
+            <div>
+              <p class="bp-desc">
+                Implementação prática de fluxos de trabalho com Agentes de IA e LLMs aplicados ao ciclo de engenharia de software, combinando os desafios do EDUCATHON (Instituto ELDORADO + IBM SkillsBuild com IBM watsonx) e a arquitetura de agentes certificada pela Oracle (LangChain, OpenAI Agent Stack e Model Context Protocol — MCP).
+              </p>
+              <div class="bp-links">
+                <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C54ACC8A9EE017CF5D1ACA49C0CC21E558F4299E424B159DEE1730AF56CBDF05" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Credencial Oficial Oracle →</a>
+                <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Repositórios de Estudo →</a>
+              </div>
+            </div>
+            <div class="bp-spec-box">
+              <div class="spec-line"><span>PROTOCOLOS:</span> <b>Model Context Protocol (MCP)</b></div>
+              <div class="spec-line"><span>ORQUESTRAÇÃO:</span> <b>LangChain + OpenAI Agent Stack</b></div>
+              <div class="spec-line"><span>ECOSSISTEMAS:</span> <b>OCI Enterprise AI + IBM watsonx</b></div>
+              <div class="spec-line"><span>VALIDAÇÃO:</span> <b>Exame Oficial Oracle + Banca IBM</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 02: MATRIZ COMPUTACIONAL DE COMPETÊNCIAS -->
+    <div class="stack-section">
+      <div class="section-header">
+        <span>02 // COMPUTATIONAL ENGINEERING STACK</span>
+        <span>[VERIFIED TECHNICAL SKILLS]</span>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-header">LAYER 01 // COMPILATION & RUNTIMES</div>
+          <div class="stack-title">Backend, APIs & Infraestrutura</div>
+          <div class="stack-tags">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">FastAPI</span>
+            <span class="stack-tag">Docker</span>
+            <span class="stack-tag">TypeScript</span>
+            <span class="stack-tag">Node.js / Express</span>
+            <span class="stack-tag">REST APIs</span>
+            <span class="stack-tag">Pytest (Testes Automatizados)</span>
+            <span class="stack-tag">Git / GitHub</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-header">LAYER 02 // ORCHESTRATION & LOGIC</div>
+          <div class="stack-title">Agentes de IA, LLMs & Governança</div>
+          <div class="stack-tags">
+            <span class="stack-tag">LangChain</span>
+            <span class="stack-tag">Model Context Protocol (MCP)</span>
+            <span class="stack-tag">OpenAI Agent Stack</span>
+            <span class="stack-tag">Guardrails Clínicos</span>
+            <span class="stack-tag">OCI Agentic AI</span>
+            <span class="stack-tag">NLU (Português)</span>
+            <span class="stack-tag">MLflow</span>
+            <span class="stack-tag">Engenharia de Prompts</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-header">LAYER 03 // VECTOR & MEMORY SYSTEMS</div>
+          <div class="stack-title">Recuperação Vetorial & Dados</div>
+          <div class="stack-tags">
+            <span class="stack-tag">RAG Semântico</span>
+            <span class="stack-tag">ChromaDB Vector DB</span>
+            <span class="stack-tag">Embeddings</span>
+            <span class="stack-tag">Engenharia de Corpus</span>
+            <span class="stack-tag">Anonimização PII / LGPD</span>
+            <span class="stack-tag">PostgreSQL / SQL</span>
+            <span class="stack-tag">Prisma ORM</span>
+            <span class="stack-tag">Filas Persistentes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 03: TRAJETÓRIA PROFISSIONAL, FORMAÇÃO & CREDENCIAIS (ESTRUTURA CLARA PARA RECRUTADORES) -->
+    <div class="trajectory-section">
+      <div class="section-header">
+        <span>03 // PROFESSIONAL EXPERIENCE, EDUCATION & CREDENTIALS</span>
+        <span>[INSTITUTIONAL VERIFICATION]</span>
+      </div>
+      <div class="trajectory-grid">
+        <!-- Card 1: Experiência na Residência -->
+        <div class="traj-card">
+          <div class="traj-meta">
+            <span>AGO 2026 — PRESENTE</span>
+            <span class="active-badge">● ATIVO // TEMPO INTEGRAL</span>
+          </div>
+          <div class="traj-role">Residente em Inteligência Artificial</div>
+          <div class="traj-org">Instituto de Pesquisas ELDORADO & Universidade de Brasília (UnB)</div>
+          <p class="traj-desc">
+            Selecionado entre 150 vagas no programa presencial do Programa Brasileiro de IA (MCTI / Softex) no Lab Livre UnB Gama. Atuação prática em projetos reais sob metodologia Challenge-Based Learning (CBL), desenvolvendo sistemas com IA Generativa, RAG, bancos vetoriais, APIs em FastAPI e microsserviços Docker.
+          </p>
+        </div>
+
+        <!-- Card 2: Experiência PGDF -->
+        <div class="traj-card">
+          <div class="traj-meta">
+            <span>JUL 2025 — JUL 2026 (1 ANO 1 MÊS)</span>
+            <span>BRASÍLIA, DF</span>
+          </div>
+          <div class="traj-role">Estagiário de Suporte Técnico em TI</div>
+          <div class="traj-org">Procuradoria-Geral do Distrito Federal (PGDF)</div>
+          <p class="traj-desc">
+            Atendimento técnico a procuradores e servidores do DF. Diagnóstico e resolução de incidentes de software, hardware e conectividade corporativa, gerenciamento de filas de chamados e cumprimento de SLAs via sistema GLPI com foco em comunicação clara e ágil.
+          </p>
+        </div>
+
+        <!-- Card 3: Graduação ADS -->
+        <div class="traj-card">
+          <div class="traj-meta">
+            <span>FEV 2024 — JUL 2026 (CONCLUÍDO)</span>
+            <span>COEFICIENTE: 9,30 / 10</span>
+          </div>
+          <div class="traj-role">Tecnólogo em Análise e Desenvolvimento de Sistemas</div>
+          <div class="traj-org">Centro Universitário UniEuro — Brasília, DF</div>
+          <p class="traj-desc">
+            <strong>Premiado como Melhor Aluno do Curso por 3 semestres consecutivos.</strong> Atuação prática na Fábrica de Software (SOFT-HUB) com engenharia de requisitos, análise orientada a objetos, prototipação e arquitetura de sistemas.
+          </p>
+        </div>
+
+        <!-- Card 4: Certificações e Idiomas -->
+        <div class="traj-card">
+          <div class="traj-meta">
+            <span>VERIFIED CREDENTIALS</span>
+            <span>CEFR C1 + ORACLE CLOUD</span>
+          </div>
+          <div class="traj-role">Certificações Oficiais & Fluência</div>
+          <div class="traj-org">Validação Internacional & Engenharia de Software</div>
+          <div class="cred-list">
+            <div class="cred-item">
+              <span><strong>Oracle:</strong> OCI Agentic AI Foundations Associate</span>
+              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C54ACC8A9EE017CF5D1ACA49C0CC21E558F4299E424B159DEE1730AF56CBDF05" target="_blank" rel="noopener">Verificar ↗</a>
+            </div>
+            <div class="cred-item">
+              <span><strong>Inglês C1 (Fluente):</strong> Curso Master Completo</span>
+              <span>Cultura Inglesa</span>
+            </div>
+            <div class="cred-item">
+              <span><strong>Eng. de Software:</strong> Gestão PMBOK (40h) & Projeto de Sistemas</span>
+              <span>IFRS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloco CTA -->
+    <div class="cta-card">
+      <div class="cta-title">
+        PRONTO PARA SOMAR<br>
+        <span>NO SEU TIME DE IA.</span>
+      </div>
+      <div class="cta-buttons">
+        <a href="mailto:samuca.9706@gmail.com" class="cta-btn">Enviar E-mail →</a>
+        <button class="cta-btn copy-btn" onclick="copyContact()">Copiar: samuca.9706@gmail.com</button>
+        <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="cta-btn copy-btn">Conectar no LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <footer>
+      <div>SAMUEL RODRIGUES // SWISS BRUTALISM & LATENT VECTOR FIELD (39KB SINGLE-FILE)</div>
+      <div>BRASÍLIA, DF & REMOTO // +55 (61) 99698-0907 // samuca.9706@gmail.com</div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast-pill">E-MAIL COPIADO: samuca.9706@gmail.com</div>
+
+  <script>
+    // ==========================================
+    // INTERAÇÃO ACORDEÃO (Expansão de Blueprint)
+    // ==========================================
+    function toggleRow(row) {
+      const isExpanded = row.classList.contains('expanded');
+      const rows = document.querySelectorAll('.project-row');
+      for (let i = 0; i < rows.length; i++) {
+        rows[i].classList.remove('expanded');
+        rows[i].querySelector('.p-toggle').textContent = '[EXPAND +]';
+      }
+      if (!isExpanded) {
+        row.classList.add('expanded');
+        row.querySelector('.p-toggle').textContent = '[COLLAPSE -]';
+      }
+    }
+
+    // Filtro de Projetos por Categoria
+    function filterProjects(category, btn) {
+      const btns = document.querySelectorAll('.filter-btn');
+      for (let i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+      btn.classList.add('active');
+
+      const rows = document.querySelectorAll('.project-row');
+      for (let i = 0; i < rows.length; i++) {
+        const match = category === 'all' || rows[i].getAttribute('data-cat') === category;
+        rows[i].style.display = match ? 'block' : 'none';
+      }
+    }
+
+    // Copiar Contato para Clipboard com Toast
+    function copyContact() {
+      navigator.clipboard.writeText('samuca.9706@gmail.com').then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      });
+    }
+
+    // ==========================================
+    // CAMPO VETORIAL MATEMÁTICO (Otimizado: 2 Draw Calls/Frame)
+    // ==========================================
+    const canvas = document.getElementById('vector-canvas');
+    // alpha: false desativa blending de transparência de tela cheia no compositor GPU
+    const ctx = canvas.getContext('2d', { alpha: false });
+    let w = 0, h = 0;
+    const count = 140;
+    const particles = new Array(count);
+    const mouse = { x: -1000, y: -1000, dirty: false };
+    const VORTEX_RADIUS = 200;
+    const VORTEX_RADIUS_SQ = VORTEX_RADIUS * VORTEX_RADIUS;
+
+    const telCoords = document.getElementById('tel-coords');
+    const telFps = document.getElementById('tel-fps');
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, h);
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+
+    for (let i = 0; i < count; i++) {
+      particles[i] = {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        speed: 1.2 + Math.random() * 2.2,
+        length: 14 + Math.random() * 24
+      };
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.dirty = true;
+    }, { passive: true });
+
+    let lastTime = performance.now();
+    let frameCount = 0;
+
+    function render(currentTime) {
+      frameCount++;
+      if (currentTime - lastTime >= 1000) {
+        if (telFps) telFps.textContent = frameCount;
+        frameCount = 0;
+        lastTime = currentTime;
+      }
+
+      // Atualização de DOM sincronizada ao frame (evita layout thrashing no mousemove)
+      if (mouse.dirty && telCoords) {
+        telCoords.textContent = `X: ${String(mouse.x).padStart(4, '0')} Y: ${String(mouse.y).padStart(4, '0')}`;
+        mouse.dirty = false;
+      }
+
+      const time = currentTime * 0.001;
+      const tX = time * 0.2;
+      const tY = time * 0.15;
+      const mx = mouse.x;
+      const my = mouse.y;
+
+      // Fade suave do rastro
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+      ctx.fillRect(0, 0, w, h);
+
+      // Passo 1: Batch de vetores ambientes (1 única chamada de rasterização GPU)
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.12)';
+      ctx.lineWidth = 1.0;
+
+      // Passo 2: Buffer separado apenas para vetores no vórtice do cursor
+      const activeIndices = [];
+      const activeAngles = [];
+
+      for (let i = 0; i < count; i++) {
+        const p = particles[i];
+        let angle = (Math.sin(p.x * 0.0022 + tX) + Math.cos(p.y * 0.0022 + tY)) * Math.PI;
+
+        const dx = p.x - mx;
+        const dy = p.y - my;
+        const distSq = dx * dx + dy * dy;
+
+        if (distSq < VORTEX_RADIUS_SQ) {
+          const dist = Math.sqrt(distSq);
+          const vortexForce = 1 - dist / VORTEX_RADIUS;
+          angle += (Math.atan2(dy, dx) + 1.5707963267948966) * vortexForce;
+          p.x += Math.cos(angle) * p.speed;
+          p.y += Math.sin(angle) * p.speed;
+
+          if (p.x < 0) p.x = w; else if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h; else if (p.y > h) p.y = 0;
+
+          activeIndices.push(i);
+          activeAngles.push(angle);
+        } else {
+          const cosA = Math.cos(angle);
+          const sinA = Math.sin(angle);
+          p.x += cosA * p.speed;
+          p.y += sinA * p.speed;
+
+          if (p.x < 0) p.x = w; else if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h; else if (p.y > h) p.y = 0;
+
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x - cosA * p.length, p.y - sinA * p.length);
+        }
+      }
+      ctx.stroke();
+
+      // Renderiza os vetores sob efeito de vórtice em 1 único stroke âmbar
+      if (activeIndices.length > 0) {
+        ctx.beginPath();
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 2.2;
+        for (let j = 0; j < activeIndices.length; j++) {
+          const p = particles[activeIndices[j]];
+          const a = activeAngles[j];
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x - Math.cos(a) * p.length, p.y - Math.sin(a) * p.length);
+        }
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  </script>
+</body>
+</html>
