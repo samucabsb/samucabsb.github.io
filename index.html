@@ -622,9 +622,14 @@
       will-change: transform, opacity;
     }
     .mascot-sheet.dir {
+      width: 960px;
+      height: 768px;
+      transform: translate3d(-192px, -576px, 0);
       opacity: 1;
     }
     .mascot-sheet.react {
+      width: 576px;
+      height: 576px;
       opacity: 0;
     }
     .cta-btn {
@@ -1050,7 +1055,7 @@
       <div class="cta-mascot-wrap">
         <button id="robot-mascot" class="mascot-frame" type="button" aria-label="Boop the robot mascot">
           <span id="robot-squash" class="mascot-squash">
-            <img id="robot-dir" class="mascot-sheet dir" src="./mascots/robot-directions.webp" width="576" height="576" alt="" decoding="async">
+            <img id="robot-dir" class="mascot-sheet dir" src="./mascots/robot-directions.webp" width="960" height="768" alt="" decoding="async">
             <img id="robot-react" class="mascot-sheet react" src="./mascots/robot-reactions.webp" width="576" height="576" alt="" decoding="async">
           </span>
         </button>
@@ -1166,7 +1171,6 @@
         updateMascotDirection(mouse.x, mouse.y);
         mouse.dirty = false;
       }
-      stepMascotSpring();
 
       const time = currentTime * 0.001;
       const tX = time * 0.2;
@@ -1249,19 +1253,9 @@
     const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Ordem horária a partir da direita (corrigido swap up-left/up-right do sprite robot)
-    const SECTOR_TO_CELL = [
-      [2, 1], // 0: right
-      [2, 2], // 1: down-right
-      [1, 2], // 2: down
-      [0, 2], // 3: down-left
-      [0, 1], // 4: left
-      [2, 0], // 5: up-left (célula 2,0 no sheet olha para ↖)
-      [1, 0], // 6: up
-      [0, 0], // 7: up-right (célula 0,0 no sheet olha para ↗)
-    ];
-    const SECTOR_ARC = (Math.PI * 2) / 8;
-    const HYSTERESIS = 0.12;
+    // 16 direções (22.5° por setor no grid 5x4) + centro na célula 16 (col=1, row=3)
+    const SECTOR_ARC = (Math.PI * 2) / 16;
+    const HYSTERESIS = 0.06;
     const DEAD_ZONE_SQ = 70 * 70;
     const PAYOFF_CELLS = [
       [1, 0], // heart
@@ -1278,13 +1272,10 @@
 
     let currentSector = -1;
     let lastCol = 1;
-    let lastRow = 1;
+    let lastRow = 3;
     let boopCount = 0;
     let lastBoopAt = 0;
     let boopTimers = [];
-
-    // Interpolação contínua GPU (120-240 FPS) entre os 8 setores discretos
-    const aimSpring = { tx: 0, ty: 0, rot: 0, curTx: 0, curTy: 0, curRot: 0, settle: 0 };
 
     function setLayerCell(el, col, row) {
       if (el) el.style.transform = `translate3d(${-col * 192}px, ${-row * 192}px, 0)`;
@@ -1295,21 +1286,8 @@
       const rect = mascotBtn.getBoundingClientRect();
       const dx = mx - (rect.left + rect.width * 0.5);
       const dy = my - (rect.top + rect.height * 0.5);
-      const dist = Math.hypot(dx, dy);
 
-      if (dist < 70) {
-        aimSpring.tx = 0;
-        aimSpring.ty = 0;
-        aimSpring.rot = 0;
-      } else {
-        const nx = Math.max(-1, Math.min(1, dx / 480));
-        const ny = Math.max(-1, Math.min(1, dy / 420));
-        aimSpring.tx = nx * 5.5;
-        aimSpring.ty = ny * 4.0;
-        aimSpring.rot = nx * 4.2;
-      }
-
-      let col = 1, row = 1;
+      let col = 1, row = 3;
       if (dx * dx + dy * dy < DEAD_ZONE_SQ) {
         currentSector = -1;
       } else {
@@ -1319,39 +1297,16 @@
           const wrapped = Math.atan2(Math.sin(diff), Math.cos(diff));
           if (Math.abs(wrapped) < SECTOR_ARC * 0.5 + HYSTERESIS) return;
         }
-        currentSector = (Math.round(angle / SECTOR_ARC) + 8) % 8;
-        col = SECTOR_TO_CELL[currentSector][0];
-        row = SECTOR_TO_CELL[currentSector][1];
+        currentSector = (Math.round(angle / SECTOR_ARC) + 16) % 16;
+        col = currentSector % 5;
+        row = Math.floor(currentSector / 5);
       }
 
       if (col !== lastCol || row !== lastRow) {
         lastCol = col;
         lastRow = row;
         setLayerCell(dirLayer, col, row);
-        aimSpring.settle = 1;
       }
-    }
-
-    function stepMascotSpring() {
-      if (reducedMotion || !mascotBtn) return;
-      const dtx = aimSpring.tx - aimSpring.curTx;
-      const dty = aimSpring.ty - aimSpring.curTy;
-      const drot = aimSpring.rot - aimSpring.curRot;
-      if (
-        Math.abs(dtx) < 0.015 &&
-        Math.abs(dty) < 0.015 &&
-        Math.abs(drot) < 0.015 &&
-        aimSpring.settle < 0.01
-      ) {
-        return;
-      }
-      aimSpring.curTx += dtx * 0.16;
-      aimSpring.curTy += dty * 0.16;
-      aimSpring.curRot += drot * 0.16;
-      aimSpring.settle *= 0.78;
-      const sx = 1 + aimSpring.settle * 0.024;
-      const sy = 1 - aimSpring.settle * 0.024;
-      mascotBtn.style.transform = `translate3d(${aimSpring.curTx.toFixed(2)}px, ${aimSpring.curTy.toFixed(2)}px, 0) rotate(${aimSpring.curRot.toFixed(2)}deg) scale(${sx.toFixed(4)}, ${sy.toFixed(4)})`;
     }
 
     function showReaction(col, row) {
