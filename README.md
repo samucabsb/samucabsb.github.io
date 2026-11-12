@@ -15,7 +15,8 @@ Portfólio técnico construído sob a estética **Swiss Brutalism & Latent Tenso
 | **Motor Gráfico (Canvas 2D)** | Campo vetorial contínuo $\theta(x,y,t) = (\sin(kx + \omega_x t) + \cos(ky + \omega_y t))\pi$ com vórtice interativo |
 | **Otimização de GPU** | *Batched Path Rendering*: `140` vetores agrupados em apenas **`2` draw calls (`ctx.stroke()`) por frame** |
 | **Compositor & DOM** | Canal alpha desativado (`{ alpha: false }`), *squared-distance culling* (`distSq < 40000`) e telemetria sincronizada ao `requestAnimationFrame` |
-| **CI/CD** | Deploy automatizado via GitHub Actions (`.github/workflows/deploy.yml`) |
+| **Avatar Interativo (`3×3`)** | Mascote personalizado em sprite sheets `WebP` transparentes (`mascots/`), rastreamento angular em Vanilla JS + reações ao clique (zero React/npm) |
+| **CI/CD** | Deploy automatizado via GitHub Actions (`.github/workflows/deploy.yml`) + `.nojekyll` |
 
 ---
 

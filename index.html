@@ -556,16 +556,22 @@
     .cta-card {
       background: var(--black);
       color: var(--bg);
-      padding: 80px 64px;
+      padding: 72px 64px;
       margin-bottom: 88px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 36px;
+      gap: 40px;
+    }
+    .cta-main {
+      flex: 1 1 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
     }
     .cta-title {
-      font-size: clamp(36px, 5.5vw, 64px);
+      font-size: clamp(36px, 5.2vw, 62px);
       font-weight: 700;
       line-height: 1.0;
       letter-spacing: -2px;
@@ -576,6 +582,63 @@
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
+    }
+    .cta-mascot-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .mascot-frame {
+      position: relative;
+      width: 196px;
+      height: 196px;
+      background-color: var(--card-bg);
+      background-image:
+        linear-gradient(to right, rgba(5, 5, 5, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(5, 5, 5, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border: 2px solid var(--accent);
+      box-shadow: 6px 6px 0 0 rgba(245, 158, 11, 0.25);
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+      transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.16s;
+    }
+    .mascot-frame:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 0 rgba(245, 158, 11, 0.4);
+    }
+    .mascot-frame.poked {
+      transform: scale(1.06, 0.92);
+    }
+    .mascot-sprite {
+      width: 100%;
+      height: 100%;
+      background-image: url('./mascots/samuel-directions.webp');
+      background-size: 300% 300%;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      will-change: background-position;
+    }
+    .mascot-caption {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+    .mascot-caption b {
+      color: var(--accent);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mascot-frame, .mascot-frame.poked {
+        transition: none;
+        transform: none;
+      }
     }
     .cta-btn {
       background: var(--bg);
@@ -648,7 +711,8 @@
       .stack-grid { grid-template-columns: 1fr; }
       .trajectory-grid { grid-template-columns: 1fr; }
       .telemetry { display: none; }
-      .cta-card { padding: 48px 32px; }
+      .cta-card { padding: 48px 32px; justify-content: center; }
+      .cta-mascot-wrap { width: 100%; margin-top: 8px; }
     }
   </style>
 </head>
@@ -985,14 +1049,22 @@
 
     <!-- Bloco CTA -->
     <div class="cta-card">
-      <div class="cta-title">
-        PRONTO PARA SOMAR<br>
-        <span>NO SEU TIME DE IA.</span>
+      <div class="cta-main">
+        <div class="cta-title">
+          PRONTO PARA SOMAR<br>
+          <span>NO SEU TIME DE IA.</span>
+        </div>
+        <div class="cta-buttons">
+          <a href="mailto:samuca.9706@gmail.com" class="cta-btn">Enviar E-mail →</a>
+          <button class="cta-btn copy-btn" onclick="copyContact()">Copiar: samuca.9706@gmail.com</button>
+          <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="cta-btn copy-btn">Conectar no LinkedIn ↗</a>
+        </div>
       </div>
-      <div class="cta-buttons">
-        <a href="mailto:samuca.9706@gmail.com" class="cta-btn">Enviar E-mail →</a>
-        <button class="cta-btn copy-btn" onclick="copyContact()">Copiar: samuca.9706@gmail.com</button>
-        <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="cta-btn copy-btn">Conectar no LinkedIn ↗</a>
+      <div class="cta-mascot-wrap">
+        <div id="samuel-mascot" class="mascot-frame" role="button" tabindex="0" aria-label="Mascote interativo do Samuel Rodrigues — clique para reagir">
+          <div id="samuel-sprite" class="mascot-sprite"></div>
+        </div>
+        <div class="mascot-caption"><b>[CLICK]</b> // INTERACTIVE AVATAR</div>
       </div>
     </div>
 
@@ -1082,6 +1154,9 @@
       mouse.y = e.clientY;
       mouse.dirty = true;
     }, { passive: true });
+    window.addEventListener('scroll', () => {
+      mouse.dirty = true;
+    }, { passive: true });
 
     let lastTime = performance.now();
     let frameCount = 0;
@@ -1095,8 +1170,11 @@
       }
 
       // Atualização de DOM sincronizada ao frame (evita layout thrashing no mousemove)
-      if (mouse.dirty && telCoords) {
-        telCoords.textContent = `X: ${String(mouse.x).padStart(4, '0')} Y: ${String(mouse.y).padStart(4, '0')}`;
+      if (mouse.dirty) {
+        if (telCoords) {
+          telCoords.textContent = `X: ${String(mouse.x).padStart(4, '0')} Y: ${String(mouse.y).padStart(4, '0')}`;
+        }
+        updateMascotDirection(mouse.x, mouse.y);
         mouse.dirty = false;
       }
 
@@ -1170,6 +1248,104 @@
 
       requestAnimationFrame(render);
     }
+
+    // ==========================================
+    // MASCOTE INTERATIVO 3x3 (Zero-Dep page-mascot)
+    // ==========================================
+    const mascotFrame = document.getElementById('samuel-mascot');
+    const mascotSprite = document.getElementById('samuel-sprite');
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const DIR_SHEET = "url('./mascots/samuel-directions.webp')";
+    const REACT_SHEET = "url('./mascots/samuel-reactions.webp')";
+
+    // Preload reactions sheet para resposta instantânea ao clique
+    const preloadReact = new Image();
+    preloadReact.src = './mascots/samuel-reactions.webp';
+
+    let mascotPoked = false;
+    let pokeTimer = null;
+    let lastReactIdx = -1;
+    let lastMascotCol = 1;
+    let lastMascotRow = 1;
+
+    function setSpriteCell(col, row) {
+      if (mascotSprite) {
+        mascotSprite.style.backgroundPosition = `${col * 50}% ${row * 50}%`;
+      }
+    }
+
+    function updateMascotDirection(mx, my) {
+      if (!hasFinePointer || mascotPoked || !mascotFrame || mx < 0) return;
+      const rect = mascotFrame.getBoundingClientRect();
+      const cx = rect.left + rect.width * 0.5;
+      const cy = rect.top + rect.height * 0.5;
+      const dx = mx - cx;
+      const dy = my - cy;
+      const distSq = dx * dx + dy * dy;
+
+      let col = 1, row = 1;
+      if (distSq >= 3600) {
+        const angle = Math.atan2(dy, dx); // -PI..PI (0 = direita)
+        const sector = Math.round(angle / (Math.PI / 4));
+        // Mapeamento dos 8 setores ao redor da célula central (1,1)
+        switch (sector) {
+          case 0:  col = 2; row = 1; break; // Direita
+          case 1:  col = 2; row = 2; break; // Baixo-Direita
+          case 2:  col = 1; row = 2; break; // Baixo
+          case 3:  col = 0; row = 2; break; // Baixo-Esquerda
+          case 4:
+          case -4: col = 0; row = 1; break; // Esquerda
+          case -3: col = 0; row = 0; break; // Cima-Esquerda
+          case -2: col = 1; row = 0; break; // Cima
+          case -1: col = 2; row = 0; break; // Cima-Direita
+        }
+      }
+
+      if (col !== lastMascotCol || row !== lastMascotRow) {
+        lastMascotCol = col;
+        lastMascotRow = row;
+        setSpriteCell(col, row);
+      }
+    }
+
+    function pokeMascot() {
+      if (!mascotFrame || !mascotSprite) return;
+      mascotPoked = true;
+      if (pokeTimer) clearTimeout(pokeTimer);
+
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * 9);
+      } while (idx === lastReactIdx);
+      lastReactIdx = idx;
+
+      const col = idx % 3;
+      const row = Math.floor(idx / 3);
+      mascotSprite.style.backgroundImage = REACT_SHEET;
+      setSpriteCell(col, row);
+
+      mascotFrame.classList.remove('poked');
+      void mascotFrame.offsetWidth;
+      mascotFrame.classList.add('poked');
+      setTimeout(() => mascotFrame.classList.remove('poked'), 160);
+
+      pokeTimer = setTimeout(() => {
+        mascotPoked = false;
+        mascotSprite.style.backgroundImage = DIR_SHEET;
+        setSpriteCell(lastMascotCol, lastMascotRow);
+      }, 650);
+    }
+
+    if (mascotFrame) {
+      mascotFrame.addEventListener('click', pokeMascot);
+      mascotFrame.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          pokeMascot();
+        }
+      });
+    }
+
     requestAnimationFrame(render);
   </script>
 </body>
