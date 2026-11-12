@@ -1166,6 +1166,7 @@
         updateMascotDirection(mouse.x, mouse.y);
         mouse.dirty = false;
       }
+      stepMascotSpring();
 
       const time = currentTime * 0.001;
       const tX = time * 0.2;
@@ -1282,6 +1283,9 @@
     let lastBoopAt = 0;
     let boopTimers = [];
 
+    // Interpolação contínua GPU (120-240 FPS) entre os 8 setores discretos
+    const aimSpring = { tx: 0, ty: 0, rot: 0, curTx: 0, curTy: 0, curRot: 0, settle: 0 };
+
     function setLayerCell(el, col, row) {
       if (el) el.style.transform = `translate3d(${-col * 192}px, ${-row * 192}px, 0)`;
     }
@@ -1291,6 +1295,19 @@
       const rect = mascotBtn.getBoundingClientRect();
       const dx = mx - (rect.left + rect.width * 0.5);
       const dy = my - (rect.top + rect.height * 0.5);
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < 70) {
+        aimSpring.tx = 0;
+        aimSpring.ty = 0;
+        aimSpring.rot = 0;
+      } else {
+        const nx = Math.max(-1, Math.min(1, dx / 480));
+        const ny = Math.max(-1, Math.min(1, dy / 420));
+        aimSpring.tx = nx * 5.5;
+        aimSpring.ty = ny * 4.0;
+        aimSpring.rot = nx * 4.2;
+      }
 
       let col = 1, row = 1;
       if (dx * dx + dy * dy < DEAD_ZONE_SQ) {
@@ -1311,7 +1328,30 @@
         lastCol = col;
         lastRow = row;
         setLayerCell(dirLayer, col, row);
+        aimSpring.settle = 1;
       }
+    }
+
+    function stepMascotSpring() {
+      if (reducedMotion || !mascotBtn) return;
+      const dtx = aimSpring.tx - aimSpring.curTx;
+      const dty = aimSpring.ty - aimSpring.curTy;
+      const drot = aimSpring.rot - aimSpring.curRot;
+      if (
+        Math.abs(dtx) < 0.015 &&
+        Math.abs(dty) < 0.015 &&
+        Math.abs(drot) < 0.015 &&
+        aimSpring.settle < 0.01
+      ) {
+        return;
+      }
+      aimSpring.curTx += dtx * 0.16;
+      aimSpring.curTy += dty * 0.16;
+      aimSpring.curRot += drot * 0.16;
+      aimSpring.settle *= 0.78;
+      const sx = 1 + aimSpring.settle * 0.024;
+      const sy = 1 - aimSpring.settle * 0.024;
+      mascotBtn.style.transform = `translate3d(${aimSpring.curTx.toFixed(2)}px, ${aimSpring.curTy.toFixed(2)}px, 0) rotate(${aimSpring.curRot.toFixed(2)}deg) scale(${sx.toFixed(4)}, ${sy.toFixed(4)})`;
     }
 
     function showReaction(col, row) {
