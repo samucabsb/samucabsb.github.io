@@ -592,8 +592,8 @@
     .mascot-frame {
       position: relative;
       display: block;
-      width: 196px;
-      height: 196px;
+      width: 192px;
+      height: 192px;
       padding: 0;
       border: 0;
       background: transparent;
@@ -601,29 +601,30 @@
       cursor: pointer;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.25)) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
     }
     .mascot-squash {
       position: relative;
       display: block;
-      width: 100%;
-      height: 100%;
+      width: 192px;
+      height: 192px;
+      overflow: hidden;
       transform-origin: 50% 78%;
     }
-    .mascot-layer {
+    .mascot-sheet {
       position: absolute;
-      inset: 0;
-      background-size: 300% 300%;
-      background-position: 50% 50%;
-      background-repeat: no-repeat;
-      will-change: background-position, opacity;
+      top: 0;
+      left: 0;
+      width: 576px;
+      height: 576px;
+      max-width: none;
+      pointer-events: none;
+      transform: translate3d(-192px, -192px, 0);
+      will-change: transform, opacity;
     }
-    .mascot-layer.dir {
-      background-image: url('./mascots/robot-directions.webp');
+    .mascot-sheet.dir {
       opacity: 1;
     }
-    .mascot-layer.react {
-      background-image: url('./mascots/robot-reactions.webp');
+    .mascot-sheet.react {
       opacity: 0;
     }
     .cta-btn {
@@ -1049,8 +1050,8 @@
       <div class="cta-mascot-wrap">
         <button id="robot-mascot" class="mascot-frame" type="button" aria-label="Boop the robot mascot">
           <span id="robot-squash" class="mascot-squash">
-            <span id="robot-dir" class="mascot-layer dir"></span>
-            <span id="robot-react" class="mascot-layer react"></span>
+            <img id="robot-dir" class="mascot-sheet dir" src="./mascots/robot-directions.webp" width="576" height="576" alt="" decoding="async">
+            <img id="robot-react" class="mascot-sheet react" src="./mascots/robot-reactions.webp" width="576" height="576" alt="" decoding="async">
           </span>
         </button>
       </div>
@@ -1282,7 +1283,7 @@
     let boopTimers = [];
 
     function setLayerCell(el, col, row) {
-      if (el) el.style.backgroundPosition = `${col * 50}% ${row * 50}%`;
+      if (el) el.style.transform = `translate3d(${-col * 192}px, ${-row * 192}px, 0)`;
     }
 
     function updateMascotDirection(mx, my) {
