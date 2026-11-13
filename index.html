@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Samuel Rodrigues — AI & Software Developer | Residente em IA (Instituto ELDORADO / UnB). Arquiteturas RAG, FastAPI, ChromaDB, Agentes de IA e Engenharia de Software.">
+  <meta id="meta-desc" name="description" content="Samuel Rodrigues — AI & Software Engineer | Residente em IA (Instituto ELDORADO / UnB). Sistemas RAG, Machine Learning Clássico, FastAPI, ChromaDB e Agentes de IA.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://samucabsb.github.io/">
+  <meta property="og:title" content="SAMUEL RODRIGUES — AI & Software Engineer">
+  <meta property="og:description" content="Applied AI Systems, Classical ML Pipelines & Python Backend. AI Resident @ Instituto ELDORADO / UnB.">
+  <meta property="og:image" content="https://samucabsb.github.io/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SAMUEL RODRIGUES — AI & Software Engineer">
+  <meta name="twitter:description" content="Applied AI Systems, Classical ML Pipelines & Python Backend. AI Resident @ Instituto ELDORADO / UnB.">
+  <meta name="twitter:image" content="https://samucabsb.github.io/assets/og-cover.png">
+  <link rel="canonical" href="https://samucabsb.github.io/">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23050505'/%3E%3Crect x='4' y='4' width='56' height='56' fill='none' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='32' y='42' font-family='monospace' font-weight='700' font-size='28' text-anchor='middle' fill='%23ffffff'%3ESR%3C/text%3E%3C/svg%3E">
   <title>SAMUEL RODRIGUES — AI & Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,10 +76,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 0;
+      padding: 20px 0;
       border-bottom: 2px solid var(--black);
       font-family: var(--font-mono);
       font-size: 13px;
+      gap: 16px;
+      flex-wrap: wrap;
     }
     .nav-brand {
       display: flex;
@@ -74,6 +91,56 @@
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.6px;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-left: auto;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--black);
+      background: rgba(255, 255, 255, 0.92);
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-btn.active {
+      background: var(--black);
+      color: var(--bg);
+    }
+    .lang-btn:not(.active):hover {
+      color: var(--black);
     }
     .status-pill {
       background: var(--black);
@@ -315,18 +382,29 @@
     }
     .project-row {
       border-top: 2px solid var(--black);
-      padding: 24px 0;
-      cursor: pointer;
       transition: background 0.15s;
     }
-    .project-row:hover {
-      background: rgba(0, 0, 0, 0.02);
-    }
     .row-header {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 24px 0;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
       display: grid;
       grid-template-columns: 72px 2.2fr 1.6fr 110px;
       align-items: center;
       gap: 16px;
+      transition: background 0.15s;
+    }
+    .row-header:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .row-header:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
     }
     .p-idx {
       font-family: var(--font-mono);
@@ -369,9 +447,8 @@
     /* Acordeão Blueprint Expandido */
     .blueprint-body {
       display: none;
-      padding: 24px 16px 12px 72px;
+      padding: 20px 16px 24px 72px;
       border-top: 1px dashed var(--border);
-      margin-top: 20px;
     }
     .project-row.expanded {
       background: rgba(250, 250, 250, 0.94);
@@ -440,7 +517,7 @@
     }
     .stack-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
     .stack-card {
@@ -688,18 +765,47 @@
       gap: 16px;
     }
 
+    #projects, #stack, #trajectory, #contact {
+      scroll-margin-top: 24px;
+    }
+
     /* Responsividade */
+    @media (max-width: 1080px) {
+      .telemetry { display: none; }
+    }
     @media (max-width: 900px) {
       .hero-bottom { grid-template-columns: 1fr; }
-      .row-header { grid-template-columns: 48px 1fr auto; }
-      .p-metrics { display: none; }
-      .blueprint-body { padding-left: 0; padding-right: 0; }
+      .row-header {
+        grid-template-columns: 44px 1fr auto;
+        row-gap: 6px;
+        align-items: baseline;
+      }
+      .p-idx { grid-column: 1; grid-row: 1; }
+      .p-title { grid-column: 2; grid-row: 1; font-size: 20px; }
+      .p-toggle { grid-column: 3; grid-row: 1; }
+      .p-metrics {
+        display: block;
+        grid-column: 2 / -1;
+        grid-row: 2;
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+      .blueprint-body { padding: 18px 0 22px 0; }
       .blueprint-grid { grid-template-columns: 1fr; }
       .stack-grid { grid-template-columns: 1fr; }
       .trajectory-grid { grid-template-columns: 1fr; }
-      .telemetry { display: none; }
       .cta-card { padding: 48px 32px; justify-content: center; }
       .cta-mascot-wrap { width: 100%; margin-top: 8px; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+      .hero { padding: 48px 0 44px 0; }
+      .hero-title {
+        font-size: clamp(34px, 10vw, 52px);
+        letter-spacing: -1.5px;
+        margin-bottom: 28px;
+      }
+      .nav-links { display: none; }
     }
   </style>
 </head>
@@ -711,24 +817,36 @@
   <div class="container">
     <nav>
       <div class="nav-brand">
-        <span class="status-pill">AI RESIDENT // ELDORADO · UnB</span>
+        <span class="status-pill" data-i18n="nav.status">AI RESIDENT // ELDORADO · UnB</span>
       </div>
-      <div class="telemetry">
-        <span>FPS: <b id="tel-fps">120</b></span>
-        <span id="tel-coords">X: 0000 Y: 0000</span>
-        <span>STATUS: <b style="color:var(--emerald);">OPEN_TO_WORK</b></span>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#projects" data-i18n="nav.projects">Projetos</a>
+          <a href="#stack" data-i18n="nav.stack">Stack</a>
+          <a href="#trajectory" data-i18n="nav.trajectory">Trajetória</a>
+          <a href="#contact" data-i18n="nav.contact">Contato</a>
+        </div>
+        <div class="telemetry">
+          <span>FPS: <b id="tel-fps">120</b></span>
+          <span id="tel-coords">X: 0000 Y: 0000</span>
+          <span>STATUS: <b style="color:var(--emerald);">OPEN_TO_WORK</b></span>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Language toggle">
+          <button type="button" class="lang-btn active" data-lang="pt" aria-pressed="true" onclick="setLanguage('pt')">PT</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" onclick="setLanguage('en')">EN</button>
+        </div>
       </div>
     </nav>
 
     <section class="hero">
       <div class="hero-identity">
         <span class="identity-name">SAMUEL RODRIGUES</span>
-        <span class="identity-badge">AI &amp; SOFTWARE DEVELOPER</span>
+        <span class="identity-badge" data-i18n="hero.badge">AI &amp; SOFTWARE DEVELOPER</span>
       </div>
       <div class="hero-meta">
-        <span>[RESIDENTE EM IA @ ELDORADO / UnB]</span>
-        <span>PYTHON · RAG · FASTAPI · AGENTES</span>
-        <span>BRASÍLIA, DF // REMOTO (INGLÊS C1)</span>
+        <span data-i18n="hero.meta1">[RESIDENTE EM IA @ ELDORADO / UnB]</span>
+        <span data-i18n="hero.meta2">PYTHON · RAG · ML · FASTAPI · AGENTES</span>
+        <span data-i18n="hero.meta3">BRASÍLIA, DF // REMOTO (INGLÊS C1)</span>
       </div>
       <h1 class="hero-title">
         APPLIED<br>
@@ -737,21 +855,22 @@
       </h1>
       <div class="hero-bottom">
         <div>
-          <p class="hero-desc">
-            Desenvolvedor de Software e Engenheiro de IA atuando como Residente no Instituto de Pesquisas ELDORADO em parceria com a Universidade de Brasília (UnB). Construo aplicações com IA Generativa, recuperação semântica (RAG), bancos vetoriais e APIs performáticas em Python e FastAPI.
+          <p class="hero-desc" data-i18n="hero.desc">
+            Desenvolvedor de Software e Engenheiro de IA atuando como Residente no Instituto de Pesquisas ELDORADO em parceria com a Universidade de Brasília (UnB). Construo aplicações com IA Generativa, Machine Learning clássico, recuperação semântica (RAG), bancos vetoriais e APIs performáticas em Python e FastAPI.
           </p>
           <div class="hero-actions">
-            <a href="#projects" class="btn-action primary">Inspecionar Projetos ↓</a>
-            <button class="btn-action secondary" onclick="copyContact()">Copiar E-mail</button>
+            <a href="#projects" class="btn-action primary" data-i18n="hero.ctaProjects">Inspecionar Projetos ↓</a>
+            <a href="./assets/Samuel-Rodrigues-CV.pdf" download="Samuel-Rodrigues-CV.pdf" target="_blank" rel="noopener" class="btn-action secondary" data-i18n="hero.ctaCv">Download CV (PDF) ↓</a>
+            <button type="button" class="btn-action secondary" onclick="copyContact()" data-i18n="hero.ctaEmail">Copiar E-mail</button>
             <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="btn-action secondary">GitHub ↗</a>
             <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="btn-action secondary">LinkedIn ↗</a>
           </div>
         </div>
         <div class="quick-specs">
-          <div class="spec-row"><span>RESIDÊNCIA ATUAL:</span> <b>ELDORADO / UnB (PBIA)</b></div>
-          <div class="spec-row"><span>GRADUAÇÃO (ADS):</span> <b>Média 9.3/10 (3x Top 1)</b></div>
-          <div class="spec-row"><span>CERTIFICAÇÃO:</span> <b>Oracle Agentic AI Assoc.</b></div>
-          <div class="spec-row"><span>IDIOMA:</span> <b>Inglês C1 (Fluente)</b></div>
+          <div class="spec-row"><span data-i18n="specs.resLabel">RESIDÊNCIA ATUAL:</span> <b>ELDORADO / UnB (PBIA)</b></div>
+          <div class="spec-row"><span data-i18n="specs.degLabel">GRADUAÇÃO (ADS):</span> <b data-i18n="specs.degVal">Média 9.3/10 (3x Top 1)</b></div>
+          <div class="spec-row"><span data-i18n="specs.certLabel">CERTIFICAÇÃO:</span> <b>Oracle Agentic AI Assoc.</b></div>
+          <div class="spec-row"><span data-i18n="specs.langLabel">IDIOMA:</span> <b data-i18n="specs.langVal">Inglês C1 (Fluente)</b></div>
         </div>
       </div>
     </section>
@@ -759,149 +878,180 @@
 
   <div class="marquee-strip">
     <div class="marquee-inner">
-      PYTHON & FASTAPI BACKEND • RAG SEMANTIC RETRIEVAL • CHROMADB VECTOR STORE • ORACLE AGENTIC AI • MODEL CONTEXT PROTOCOL (MCP) • LANGCHAIN • DOCKER CONTAINERS • MLFLOW GOVERNANCE • 237+ AUTOMATED TESTS • 
-      PYTHON & FASTAPI BACKEND • RAG SEMANTIC RETRIEVAL • CHROMADB VECTOR STORE • ORACLE AGENTIC AI • MODEL CONTEXT PROTOCOL (MCP) • LANGCHAIN • DOCKER CONTAINERS • MLFLOW GOVERNANCE • 237+ AUTOMATED TESTS • 
+      PYTHON & FASTAPI BACKEND • RAG SEMANTIC RETRIEVAL • SCIKIT-LEARN & XGBOOST • CHROMADB VECTOR STORE • FEATURE ENGINEERING & GRIDSEARCHCV • ORACLE AGENTIC AI • MODEL CONTEXT PROTOCOL (MCP) • LANGCHAIN • DOCKER & MLFLOW • 237+ AUTOMATED TESTS • 
+      PYTHON & FASTAPI BACKEND • RAG SEMANTIC RETRIEVAL • SCIKIT-LEARN & XGBOOST • CHROMADB VECTOR STORE • FEATURE ENGINEERING & GRIDSEARCHCV • ORACLE AGENTIC AI • MODEL CONTEXT PROTOCOL (MCP) • LANGCHAIN • DOCKER & MLFLOW • 237+ AUTOMATED TESTS • 
     </div>
   </div>
 
   <!-- SEÇÃO 01: PROJETOS TÉCNICOS DE ENGENHARIA (100% REPOSITÓRIOS E ENTREGAS REAIS) -->
   <div class="container" id="projects">
     <div class="section-header">
-      <span>01 // SELECTED ENGINEERING PROJECTS & CODEBASES</span>
-      <span>[CLICK ROW TO INSPECT TECHNICAL BLUEPRINT]</span>
+      <span data-i18n="projects.header">01 // SELECTED ENGINEERING PROJECTS & CODEBASES</span>
+      <span data-i18n="projects.hint">[CLICK HEADER TO INSPECT TECHNICAL BLUEPRINT]</span>
     </div>
 
     <div class="filter-tabs">
-      <button class="filter-btn active" onclick="filterProjects('all', this)">[ALL PROJECTS]</button>
-      <button class="filter-btn" onclick="filterProjects('vector', this)">[RAG & VECTOR]</button>
-      <button class="filter-btn" onclick="filterProjects('agents', this)">[AGENTS & LLM]</button>
-      <button class="filter-btn" onclick="filterProjects('inference', this)">[BACKEND & VISION]</button>
+      <button type="button" class="filter-btn active" onclick="filterProjects('all', this)">[ALL PROJECTS]</button>
+      <button type="button" class="filter-btn" onclick="filterProjects('vector', this)">[RAG & VECTOR]</button>
+      <button type="button" class="filter-btn" onclick="filterProjects('ml', this)">[ML & DATA]</button>
+      <button type="button" class="filter-btn" onclick="filterProjects('agents', this)">[AGENTS & LLM]</button>
+      <button type="button" class="filter-btn" onclick="filterProjects('inference', this)">[BACKEND & VISION]</button>
     </div>
 
     <div class="project-list">
       <!-- Projeto 01: SUSANNA -->
-      <div class="project-row expanded" data-cat="vector" onclick="toggleRow(this)">
-        <div class="row-header">
+      <div class="project-row expanded" data-cat="vector">
+        <button type="button" class="row-header" aria-expanded="true" onclick="toggleRow(this)">
           <div class="p-idx">/01</div>
           <div class="p-title">
-            SUSANNA-Healthcheck (Assistente RAG SUS-DF)
+            <span data-i18n="p1.title">SUSANNA-Healthcheck (Assistente RAG SUS-DF)</span>
             <span class="p-tag">RAG & VECTOR</span>
           </div>
-          <div class="p-metrics">383 UBSs | 237 Testes Automatizados</div>
+          <div class="p-metrics" data-i18n="p1.metrics">383 UBSs | 237 Testes Automatizados</div>
           <div class="p-toggle">[COLLAPSE -]</div>
-        </div>
+        </button>
         <div class="blueprint-body">
           <div class="blueprint-grid">
             <div>
-              <p class="bp-desc">
+              <p class="bp-desc" data-i18n="p1.desc">
                 Assistente virtual de saúde pública desenvolvida no Challenge 1 da Residência em IA (Instituto ELDORADO / Lab Livre UnB Gama). Localiza 383 unidades básicas de saúde nas 33 Regiões Administrativas do DF por distância, recomenda vacinas segundo o PNI e gerencia lembretes clínicos. Atuei diretamente na engenharia e curadoria do corpus de dados públicos, validação de guardrails clínicos (bloqueio estrito de diagnósticos/posologia com orientação ao SAMU 192/UBS) e anonimização de PII (LGPD).
               </p>
               <div class="bp-links">
-                <a href="https://github.com/Andre-Atlas/SUSANNA-HEALTHCHECK" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Repositório no GitHub →</a>
-                <a href="https://andre-atlas.github.io/SUSANNA-HEALTHCHECK/" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Documentação & Fluxogramas →</a>
+                <a href="https://github.com/Andre-Atlas/SUSANNA-HEALTHCHECK" target="_blank" rel="noopener" class="bp-link" data-i18n="p1.link1">Repositório no GitHub →</a>
+                <a href="https://andre-atlas.github.io/SUSANNA-HEALTHCHECK/" target="_blank" rel="noopener" class="bp-link" data-i18n="p1.link2">Documentação &amp; Fluxogramas →</a>
               </div>
             </div>
             <div class="bp-spec-box">
-              <div class="spec-line"><span>BACKEND & RAG:</span> <b>Python + FastAPI + ChromaDB</b></div>
-              <div class="spec-line"><span>OPS & FRONTEND:</span> <b>Docker + MLflow + Next.js</b></div>
-              <div class="spec-line"><span>TEST COVERAGE:</span> <b>237 Testes Automatizados</b></div>
-              <div class="spec-line"><span>MINHA ATUAÇÃO:</span> <b>Eng. de Corpus & Guardrails</b></div>
+              <div class="spec-line"><span>BACKEND &amp; RAG:</span> <b>Python + FastAPI + ChromaDB</b></div>
+              <div class="spec-line"><span>OPS &amp; FRONTEND:</span> <b>Docker + MLflow + Next.js</b></div>
+              <div class="spec-line"><span data-i18n="p1.s3k">TEST COVERAGE:</span> <b data-i18n="p1.s3v">237 Testes Automatizados</b></div>
+              <div class="spec-line"><span data-i18n="p1.s4k">MINHA ATUAÇÃO:</span> <b data-i18n="p1.s4v">Eng. de Corpus &amp; Guardrails</b></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Projeto 02: CHECKPOINT -->
-      <div class="project-row" data-cat="inference" onclick="toggleRow(this)">
-        <div class="row-header">
+      <!-- Projeto 02: AUSTRALIAN RAINFALL CLASSIFIER & CLASSICAL ML TRACK -->
+      <div class="project-row" data-cat="ml">
+        <button type="button" class="row-header" aria-expanded="false" onclick="toggleRow(this)">
           <div class="p-idx">/02</div>
           <div class="p-title">
-            Checkpoint (Full Stack & Persistent Queue Engine)
-            <span class="p-tag">BACKEND & QUEUE</span>
+            <span data-i18n="p2.title">Australian Rainfall Classifier &amp; Classical ML Track</span>
+            <span class="p-tag">ML & DATA</span>
           </div>
-          <div class="p-metrics">Fila Persistente | Concorrência Isolada</div>
+          <div class="p-metrics" data-i18n="p2.metrics">RandomForest 84% Acc | 7.557 Registros</div>
           <div class="p-toggle">[EXPAND +]</div>
-        </div>
+        </button>
         <div class="blueprint-body">
           <div class="blueprint-grid">
             <div>
-              <p class="bp-desc">
+              <p class="bp-desc" data-i18n="p2.desc">
+                Pipeline supervisionado ponta a ponta para previsão de chuva em Melbourne sobre 7.557 registros históricos (2008–2017), com mitigação de vazamento temporal (data leakage), validação estratificada para classes desbalanceadas (76,3% / 23,7%) via StratifiedKFold e busca de hiperparâmetros com GridSearchCV. O RandomForestClassifier atingiu 84% de acurácia em teste (1.273 de 1.512 acertos) superando LogisticRegression (83%), destacando Humidity3pm como principal preditor. Integra a trilha IBM AI Engineering com scikit-learn, XGBoost e clustering (PCA, K-Means, DBSCAN).
+              </p>
+              <div class="bp-links">
+                <a href="https://github.com/samucabsb/AI-Engineer-IBM/blob/main/Machine-Learning-with-Python/20-Final-Project-Australian-Rainfall-Classifier.ipynb" target="_blank" rel="noopener" class="bp-link" data-i18n="p2.link1">Abrir Notebook Capstone →</a>
+                <a href="https://github.com/samucabsb/AI-Engineer-IBM/tree/main/Machine-Learning-with-Python" target="_blank" rel="noopener" class="bp-link" data-i18n="p2.link2">Módulo Machine Learning (20 Labs) →</a>
+              </div>
+            </div>
+            <div class="bp-spec-box">
+              <div class="spec-line"><span data-i18n="p2.s1k">PIPELINE ML:</span> <b>Scikit-Learn + ColumnTransformer</b></div>
+              <div class="spec-line"><span data-i18n="p2.s2k">OTIMIZAÇÃO:</span> <b>StratifiedKFold + GridSearchCV</b></div>
+              <div class="spec-line"><span data-i18n="p2.s3k">DESEMPENHO:</span> <b data-i18n="p2.s3v">84% Test Acc (RandomForest)</b></div>
+              <div class="spec-line"><span data-i18n="p2.s4k">TOP PREDICTOR:</span> <b>Humidity3pm + Feature Leakage Fix</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 03: CHECKPOINT -->
+      <div class="project-row" data-cat="inference">
+        <button type="button" class="row-header" aria-expanded="false" onclick="toggleRow(this)">
+          <div class="p-idx">/03</div>
+          <div class="p-title">
+            <span>Checkpoint (Full Stack &amp; Persistent Queue Engine)</span>
+            <span class="p-tag">BACKEND & QUEUE</span>
+          </div>
+          <div class="p-metrics" data-i18n="p3.metrics">Fila Persistente | Concorrência Isolada</div>
+          <div class="p-toggle">[EXPAND +]</div>
+        </button>
+        <div class="blueprint-body">
+          <div class="blueprint-grid">
+            <div>
+              <p class="bp-desc" data-i18n="p3.desc">
                 Rede social e catálogo interativo para gamers inspirado no Letterboxd, desenvolvido como projeto integrador full stack. Conta com autenticação JWT, avaliações, listas, feed social e controle avançado de concorrência utilizando fila persistente em banco de dados, processamento assíncrono via worker em processo separado e resolução determinística de conflitos simultâneos validada por suíte de testes automatizados.
               </p>
               <div class="bp-links">
-                <a href="https://github.com/samucabsb/uni-project-checkpoint" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Repositório no GitHub →</a>
-                <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Perfil GitHub →</a>
+                <a href="https://github.com/samucabsb/uni-project-checkpoint" target="_blank" rel="noopener" class="bp-link" data-i18n="p3.link1">Repositório no GitHub →</a>
               </div>
             </div>
             <div class="bp-spec-box">
               <div class="spec-line"><span>BACKEND:</span> <b>Node.js + Express + TypeScript</b></div>
-              <div class="spec-line"><span>PERSISTÊNCIA:</span> <b>PostgreSQL / SQLite + Prisma ORM</b></div>
-              <div class="spec-line"><span>CONCORRÊNCIA:</span> <b>Worker Isolado + DB Queue</b></div>
-              <div class="spec-line"><span>FRONTEND:</span> <b>React + Autenticação JWT</b></div>
+              <div class="spec-line"><span data-i18n="p3.s2k">PERSISTÊNCIA:</span> <b>PostgreSQL / SQLite + Prisma ORM</b></div>
+              <div class="spec-line"><span data-i18n="p3.s3k">CONCORRÊNCIA:</span> <b data-i18n="p3.s3v">Worker Isolado + DB Queue</b></div>
+              <div class="spec-line"><span>FRONTEND:</span> <b data-i18n="p3.s4v">React + Autenticação JWT</b></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Projeto 03: DETECÇÃO DE PLACAS / VISÃO COMPUTACIONAL -->
-      <div class="project-row" data-cat="inference" onclick="toggleRow(this)">
-        <div class="row-header">
-          <div class="p-idx">/03</div>
+      <!-- Projeto 04: DETECÇÃO DE PLACAS / VISÃO COMPUTACIONAL -->
+      <div class="project-row" data-cat="inference">
+        <button type="button" class="row-header" aria-expanded="false" onclick="toggleRow(this)">
+          <div class="p-idx">/04</div>
           <div class="p-title">
-            ALPR Vehicle Plate Recognition System
+            <span>ALPR Vehicle Plate Recognition System</span>
             <span class="p-tag">COMPUTER VISION</span>
           </div>
-          <div class="p-metrics">Reconhecimento de Imagem | OCR & IA</div>
+          <div class="p-metrics" data-i18n="p4.metrics">YOLOv8 ONNX + fast-plate-ocr</div>
           <div class="p-toggle">[EXPAND +]</div>
-        </div>
+        </button>
         <div class="blueprint-body">
           <div class="blueprint-grid">
             <div>
-              <p class="bp-desc">
-                Sistema de Inteligência Artificial voltado à segurança pública para detecção e reconhecimento automático de placas de veículos roubados a partir de imagens. Desenvolvido durante a graduação em Análise e Desenvolvimento de Sistemas, integrando pipeline de pré-processamento visual, localização de caracteres e validação contra base de registros.
+              <p class="bp-desc" data-i18n="p4.desc">
+                Sistema de Visão Computacional voltado à segurança pública para detecção e reconhecimento automático de placas veiculares (padrão Mercosul e antigo) em frames de vídeo e imagens. Implementa detecção com YOLOv8 via ONNX Runtime, leitura OCR com fast-plate-ocr (CCT), quantização estática INT8 para inferência eficiente e processamento paralelo via ProcessPoolExecutor em Python.
               </p>
               <div class="bp-links">
-                <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Explorar GitHub →</a>
-                <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Ver Publicação no LinkedIn →</a>
+                <a href="https://github.com/samucabsb/uni-project-stolen-vehicles" target="_blank" rel="noopener" class="bp-link" data-i18n="p4.link1">Repositório no GitHub →</a>
               </div>
             </div>
             <div class="bp-spec-box">
-              <div class="spec-line"><span>DOMÍNIO:</span> <b>Visão Computacional & OCR</b></div>
-              <div class="spec-line"><span>LINGUAGEM:</span> <b>Python + Image Processing</b></div>
-              <div class="spec-line"><span>APLICAÇÃO:</span> <b>Detecção de Veículos Roubados</b></div>
-              <div class="spec-line"><span>CONTEXTO:</span> <b>Projeto Prático UniEuro</b></div>
+              <div class="spec-line"><span data-i18n="p4.s1k">DETECÇÃO:</span> <b>YOLOv8 (ONNX Runtime) + OpenCV</b></div>
+              <div class="spec-line"><span data-i18n="p4.s2k">OCR &amp; PADRÃO:</span> <b>fast-plate-ocr (CCT) + Mercosul</b></div>
+              <div class="spec-line"><span data-i18n="p4.s3k">OTIMIZAÇÃO:</span> <b data-i18n="p4.s3v">Quantização Estática INT8</b></div>
+              <div class="spec-line"><span data-i18n="p4.s4k">PARALELISMO:</span> <b>Python ProcessPoolExecutor</b></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Projeto 04: AGENTIC AI & EDUCATHON IBM/ELDORADO -->
-      <div class="project-row" data-cat="agents" onclick="toggleRow(this)">
-        <div class="row-header">
-          <div class="p-idx">/04</div>
+      <!-- Projeto 05: AGENTIC AI & EDUCATHON IBM/ELDORADO -->
+      <div class="project-row" data-cat="agents">
+        <button type="button" class="row-header" aria-expanded="false" onclick="toggleRow(this)">
+          <div class="p-idx">/05</div>
           <div class="p-title">
-            Agentic AI & GenAI Software Workflows
+            <span>Agentic AI &amp; GenAI Software Workflows</span>
             <span class="p-tag">AGENTS & LLM</span>
           </div>
           <div class="p-metrics">Oracle OCI + IBM Educathon (watsonx)</div>
           <div class="p-toggle">[EXPAND +]</div>
-        </div>
+        </button>
         <div class="blueprint-body">
           <div class="blueprint-grid">
             <div>
-              <p class="bp-desc">
+              <p class="bp-desc" data-i18n="p5.desc">
                 Implementação prática de fluxos de trabalho com Agentes de IA e LLMs aplicados ao ciclo de engenharia de software, combinando os desafios do EDUCATHON (Instituto ELDORADO + IBM SkillsBuild com IBM watsonx) e a arquitetura de agentes certificada pela Oracle (LangChain, OpenAI Agent Stack e Model Context Protocol — MCP).
               </p>
               <div class="bp-links">
-                <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C54ACC8A9EE017CF5D1ACA49C0CC21E558F4299E424B159DEE1730AF56CBDF05" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Credencial Oficial Oracle →</a>
-                <a href="https://github.com/samucabsb" target="_blank" rel="noopener" class="bp-link" onclick="event.stopPropagation()">Repositórios de Estudo →</a>
+                <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C54ACC8A9EE017CF5D1ACA49C0CC21E558F4299E424B159DEE1730AF56CBDF05" target="_blank" rel="noopener" class="bp-link" data-i18n="p5.link1">Credencial Oficial Oracle →</a>
+                <a href="https://github.com/samucabsb/AI-Engineer-IBM" target="_blank" rel="noopener" class="bp-link" data-i18n="p5.link2">Repositório AI-Engineer-IBM →</a>
               </div>
             </div>
             <div class="bp-spec-box">
-              <div class="spec-line"><span>PROTOCOLOS:</span> <b>Model Context Protocol (MCP)</b></div>
-              <div class="spec-line"><span>ORQUESTRAÇÃO:</span> <b>LangChain + OpenAI Agent Stack</b></div>
-              <div class="spec-line"><span>ECOSSISTEMAS:</span> <b>OCI Enterprise AI + IBM watsonx</b></div>
-              <div class="spec-line"><span>VALIDAÇÃO:</span> <b>Exame Oficial Oracle + Banca IBM</b></div>
+              <div class="spec-line"><span data-i18n="p5.s1k">PROTOCOLOS:</span> <b>Model Context Protocol (MCP)</b></div>
+              <div class="spec-line"><span data-i18n="p5.s2k">ORQUESTRAÇÃO:</span> <b>LangChain + OpenAI Agent Stack</b></div>
+              <div class="spec-line"><span data-i18n="p5.s3k">ECOSSISTEMAS:</span> <b>OCI Enterprise AI + IBM watsonx</b></div>
+              <div class="spec-line"><span data-i18n="p5.s4k">VALIDAÇÃO:</span> <b data-i18n="p5.s4v">Exame Oficial Oracle + Banca IBM</b></div>
             </div>
           </div>
         </div>
@@ -909,15 +1059,15 @@
     </div>
 
     <!-- SEÇÃO 02: MATRIZ COMPUTACIONAL DE COMPETÊNCIAS -->
-    <div class="stack-section">
+    <div class="stack-section" id="stack">
       <div class="section-header">
         <span>02 // COMPUTATIONAL ENGINEERING STACK</span>
-        <span>[VERIFIED TECHNICAL SKILLS]</span>
+        <span data-i18n="stack.hint">[VERIFIED TECHNICAL SKILLS]</span>
       </div>
       <div class="stack-grid">
         <div class="stack-card">
           <div class="stack-header">LAYER 01 // COMPILATION & RUNTIMES</div>
-          <div class="stack-title">Backend, APIs & Infraestrutura</div>
+          <div class="stack-title" data-i18n="stack.l1Title">Backend, APIs &amp; Infraestrutura</div>
           <div class="stack-tags">
             <span class="stack-tag">Python</span>
             <span class="stack-tag">FastAPI</span>
@@ -925,45 +1075,60 @@
             <span class="stack-tag">TypeScript</span>
             <span class="stack-tag">Node.js / Express</span>
             <span class="stack-tag">REST APIs</span>
-            <span class="stack-tag">Pytest (Testes Automatizados)</span>
+            <span class="stack-tag" data-i18n="stack.pytest">Pytest (Testes Automatizados)</span>
             <span class="stack-tag">Git / GitHub</span>
           </div>
         </div>
 
         <div class="stack-card">
           <div class="stack-header">LAYER 02 // ORCHESTRATION & LOGIC</div>
-          <div class="stack-title">Agentes de IA, LLMs & Governança</div>
+          <div class="stack-title" data-i18n="stack.l2Title">Agentes de IA, LLMs &amp; Governança</div>
           <div class="stack-tags">
             <span class="stack-tag">LangChain</span>
             <span class="stack-tag">Model Context Protocol (MCP)</span>
             <span class="stack-tag">OpenAI Agent Stack</span>
-            <span class="stack-tag">Guardrails Clínicos</span>
+            <span class="stack-tag" data-i18n="stack.guardrails">Guardrails Clínicos</span>
             <span class="stack-tag">OCI Agentic AI</span>
-            <span class="stack-tag">NLU (Português)</span>
+            <span class="stack-tag">NLU (Português / EN)</span>
             <span class="stack-tag">MLflow</span>
-            <span class="stack-tag">Engenharia de Prompts</span>
+            <span class="stack-tag" data-i18n="stack.prompt">Engenharia de Prompts</span>
           </div>
         </div>
 
         <div class="stack-card">
-          <div class="stack-header">LAYER 03 // VECTOR & MEMORY SYSTEMS</div>
-          <div class="stack-title">Recuperação Vetorial & Dados</div>
+          <div class="stack-header">LAYER 03 // CLASSICAL ML & VISION</div>
+          <div class="stack-title" data-i18n="stack.l3Title">Machine Learning Clássico &amp; Visão</div>
           <div class="stack-tags">
-            <span class="stack-tag">RAG Semântico</span>
+            <span class="stack-tag">Scikit-Learn</span>
+            <span class="stack-tag">XGBoost</span>
+            <span class="stack-tag">Pandas &amp; NumPy</span>
+            <span class="stack-tag">Feature Engineering</span>
+            <span class="stack-tag">GridSearchCV &amp; StratifiedKFold</span>
+            <span class="stack-tag">ColumnTransformer Pipelines</span>
+            <span class="stack-tag">PCA / K-Means / DBSCAN</span>
+            <span class="stack-tag">YOLOv8 ONNX &amp; OpenCV</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-header">LAYER 04 // VECTOR & MEMORY SYSTEMS</div>
+          <div class="stack-title" data-i18n="stack.l4Title">Recuperação Vetorial &amp; Persistência</div>
+          <div class="stack-tags">
+            <span class="stack-tag" data-i18n="stack.rag">RAG Semântico</span>
             <span class="stack-tag">ChromaDB Vector DB</span>
             <span class="stack-tag">Embeddings</span>
-            <span class="stack-tag">Engenharia de Corpus</span>
-            <span class="stack-tag">Anonimização PII / LGPD</span>
+            <span class="stack-tag" data-i18n="stack.corpus">Engenharia de Corpus</span>
+            <span class="stack-tag" data-i18n="stack.pii">Anonimização PII / LGPD</span>
             <span class="stack-tag">PostgreSQL / SQL</span>
             <span class="stack-tag">Prisma ORM</span>
-            <span class="stack-tag">Filas Persistentes</span>
+            <span class="stack-tag" data-i18n="stack.queues">Filas Persistentes</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- SEÇÃO 03: TRAJETÓRIA PROFISSIONAL, FORMAÇÃO & CREDENCIAIS (ESTRUTURA CLARA PARA RECRUTADORES) -->
-    <div class="trajectory-section">
+    <div class="trajectory-section" id="trajectory">
       <div class="section-header">
         <span>03 // PROFESSIONAL EXPERIENCE, EDUCATION & CREDENTIALS</span>
         <span>[INSTITUTIONAL VERIFICATION]</span>
@@ -972,12 +1137,12 @@
         <!-- Card 1: Experiência na Residência -->
         <div class="traj-card">
           <div class="traj-meta">
-            <span>AGO 2026 — PRESENTE</span>
-            <span class="active-badge">● ATIVO // TEMPO INTEGRAL</span>
+            <span data-i18n="t1.date">AGO 2026 — PRESENTE</span>
+            <span class="active-badge" data-i18n="t1.badge">● ATIVO // TEMPO INTEGRAL</span>
           </div>
-          <div class="traj-role">Residente em Inteligência Artificial</div>
-          <div class="traj-org">Instituto de Pesquisas ELDORADO & Universidade de Brasília (UnB)</div>
-          <p class="traj-desc">
+          <div class="traj-role" data-i18n="t1.role">Residente em Inteligência Artificial</div>
+          <div class="traj-org" data-i18n="t1.org">Instituto de Pesquisas ELDORADO &amp; Universidade de Brasília (UnB)</div>
+          <p class="traj-desc" data-i18n="t1.desc">
             Selecionado entre 150 vagas no programa presencial do Programa Brasileiro de IA (MCTI / Softex) no Lab Livre UnB Gama. Atuação prática em projetos reais sob metodologia Challenge-Based Learning (CBL), desenvolvendo sistemas com IA Generativa, RAG, bancos vetoriais, APIs em FastAPI e microsserviços Docker.
           </p>
         </div>
@@ -985,12 +1150,12 @@
         <!-- Card 2: Experiência PGDF -->
         <div class="traj-card">
           <div class="traj-meta">
-            <span>JUL 2025 — JUL 2026 (1 ANO 1 MÊS)</span>
+            <span data-i18n="t2.date">JUL 2025 — JUL 2026 (1 ANO 1 MÊS)</span>
             <span>BRASÍLIA, DF</span>
           </div>
-          <div class="traj-role">Estagiário de Suporte Técnico em TI</div>
-          <div class="traj-org">Procuradoria-Geral do Distrito Federal (PGDF)</div>
-          <p class="traj-desc">
+          <div class="traj-role" data-i18n="t2.role">Estagiário de Suporte Técnico em TI</div>
+          <div class="traj-org" data-i18n="t2.org">Procuradoria-Geral do Distrito Federal (PGDF)</div>
+          <p class="traj-desc" data-i18n="t2.desc">
             Atendimento técnico a procuradores e servidores do DF. Diagnóstico e resolução de incidentes de software, hardware e conectividade corporativa, gerenciamento de filas de chamados e cumprimento de SLAs via sistema GLPI com foco em comunicação clara e ágil.
           </p>
         </div>
@@ -998,12 +1163,12 @@
         <!-- Card 3: Graduação ADS -->
         <div class="traj-card">
           <div class="traj-meta">
-            <span>FEV 2024 — JUL 2026 (CONCLUÍDO)</span>
-            <span>COEFICIENTE: 9,30 / 10</span>
+            <span data-i18n="t3.date">FEV 2024 — JUL 2026 (CONCLUÍDO)</span>
+            <span data-i18n="t3.gpa">COEFICIENTE: 9,30 / 10</span>
           </div>
-          <div class="traj-role">Tecnólogo em Análise e Desenvolvimento de Sistemas</div>
+          <div class="traj-role" data-i18n="t3.role">Tecnólogo em Análise e Desenvolvimento de Sistemas</div>
           <div class="traj-org">Centro Universitário UniEuro — Brasília, DF</div>
-          <p class="traj-desc">
+          <p class="traj-desc" data-i18n-html="t3.descHtml">
             <strong>Premiado como Melhor Aluno do Curso por 3 semestres consecutivos.</strong> Atuação prática na Fábrica de Software (SOFT-HUB) com engenharia de requisitos, análise orientada a objetos, prototipação e arquitetura de sistemas.
           </p>
         </div>
@@ -1014,19 +1179,19 @@
             <span>VERIFIED CREDENTIALS</span>
             <span>CEFR C1 + ORACLE CLOUD</span>
           </div>
-          <div class="traj-role">Certificações Oficiais & Fluência</div>
-          <div class="traj-org">Validação Internacional & Engenharia de Software</div>
+          <div class="traj-role" data-i18n="t4.role">Certificações Oficiais &amp; Fluência</div>
+          <div class="traj-org" data-i18n="t4.org">Validação Internacional &amp; Engenharia de Software</div>
           <div class="cred-list">
             <div class="cred-item">
               <span><strong>Oracle:</strong> OCI Agentic AI Foundations Associate</span>
-              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C54ACC8A9EE017CF5D1ACA49C0CC21E558F4299E424B159DEE1730AF56CBDF05" target="_blank" rel="noopener">Verificar ↗</a>
+              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C54ACC8A9EE017CF5D1ACA49C0CC21E558F4299E424B159DEE1730AF56CBDF05" target="_blank" rel="noopener" data-i18n="t4.verify">Verificar ↗</a>
             </div>
             <div class="cred-item">
-              <span><strong>Inglês C1 (Fluente):</strong> Curso Master Completo</span>
+              <span data-i18n-html="t4.engHtml"><strong>Inglês C1 (Fluente):</strong> Curso Master Completo</span>
               <span>Cultura Inglesa</span>
             </div>
             <div class="cred-item">
-              <span><strong>Eng. de Software:</strong> Gestão PMBOK (40h) & Projeto de Sistemas</span>
+              <span data-i18n-html="t4.ifrsHtml"><strong>Eng. de Software:</strong> Gestão PMBOK (40h) &amp; Projeto de Sistemas</span>
               <span>IFRS</span>
             </div>
           </div>
@@ -1035,16 +1200,17 @@
     </div>
 
     <!-- Bloco CTA -->
-    <div class="cta-card">
+    <div class="cta-card" id="contact">
       <div class="cta-main">
-        <div class="cta-title">
+        <div class="cta-title" data-i18n-html="cta.titleHtml">
           PRONTO PARA SOMAR<br>
           <span>NO SEU TIME DE IA.</span>
         </div>
         <div class="cta-buttons">
-          <a href="mailto:samuca.9706@gmail.com" class="cta-btn">Enviar E-mail →</a>
-          <button class="cta-btn copy-btn" onclick="copyContact()">Copiar: samuca.9706@gmail.com</button>
-          <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="cta-btn copy-btn">Conectar no LinkedIn ↗</a>
+          <a href="mailto:samuca.9706@gmail.com" class="cta-btn" data-i18n="cta.email">Enviar E-mail →</a>
+          <a href="./assets/Samuel-Rodrigues-CV.pdf" download="Samuel-Rodrigues-CV.pdf" target="_blank" rel="noopener" class="cta-btn copy-btn" data-i18n="cta.cv">Download CV (PDF) ↓</a>
+          <button type="button" class="cta-btn copy-btn" onclick="copyContact()" data-i18n="cta.copy">Copiar: samuca.9706@gmail.com</button>
+          <a href="https://www.linkedin.com/in/samuel-rodrigues-tech/" target="_blank" rel="noopener" class="cta-btn copy-btn" data-i18n="cta.linkedin">Conectar no LinkedIn ↗</a>
         </div>
       </div>
       <div class="cta-mascot-wrap">
@@ -1058,27 +1224,298 @@
     </div>
 
     <footer>
-      <div>SAMUEL RODRIGUES // SWISS BRUTALISM & LATENT VECTOR FIELD (39KB SINGLE-FILE)</div>
-      <div>BRASÍLIA, DF & REMOTO // +55 (61) 99698-0907 // samuca.9706@gmail.com</div>
+      <div>SAMUEL RODRIGUES // PORTFOLIO // APPLIED AI &amp; SOFTWARE ENGINEERING</div>
+      <div data-i18n="footer.right">BRASÍLIA, DF &amp; REMOTO // samuca.9706@gmail.com</div>
     </footer>
   </div>
 
-  <div id="toast" class="toast-pill">E-MAIL COPIADO: samuca.9706@gmail.com</div>
+  <div id="toast" class="toast-pill" data-i18n="toast.copied">E-MAIL COPIADO: samuca.9706@gmail.com</div>
 
   <script>
     // ==========================================
+    // INTERNACIONALIZAÇÃO (PT-BR / EN)
+    // ==========================================
+    const I18N = {
+      pt: {
+        metaTitle: 'SAMUEL RODRIGUES — AI & Software Engineer',
+        metaDesc: 'Samuel Rodrigues — AI & Software Engineer | Residente em IA (Instituto ELDORADO / UnB). Sistemas RAG, Machine Learning Clássico, FastAPI, ChromaDB e Agentes de IA.',
+        'nav.status': 'AI RESIDENT // ELDORADO · UnB',
+        'nav.projects': 'Projetos',
+        'nav.stack': 'Stack',
+        'nav.trajectory': 'Trajetória',
+        'nav.contact': 'Contato',
+        'hero.badge': 'AI & SOFTWARE DEVELOPER',
+        'hero.meta1': '[RESIDENTE EM IA @ ELDORADO / UnB]',
+        'hero.meta2': 'PYTHON · RAG · ML · FASTAPI · AGENTES',
+        'hero.meta3': 'BRASÍLIA, DF // REMOTO (INGLÊS C1)',
+        'hero.desc': 'Desenvolvedor de Software e Engenheiro de IA atuando como Residente no Instituto de Pesquisas ELDORADO em parceria com a Universidade de Brasília (UnB). Construo aplicações com IA Generativa, Machine Learning clássico, recuperação semântica (RAG), bancos vetoriais e APIs performáticas em Python e FastAPI.',
+        'hero.ctaProjects': 'Inspecionar Projetos ↓',
+        'hero.ctaCv': 'Download CV (PDF) ↓',
+        'hero.ctaEmail': 'Copiar E-mail',
+        'specs.resLabel': 'RESIDÊNCIA ATUAL:',
+        'specs.degLabel': 'GRADUAÇÃO (ADS):',
+        'specs.degVal': 'Média 9.3/10 (3x Top 1)',
+        'specs.certLabel': 'CERTIFICAÇÃO:',
+        'specs.langLabel': 'IDIOMA:',
+        'specs.langVal': 'Inglês C1 (Fluente)',
+        'projects.header': '01 // SELECTED ENGINEERING PROJECTS & CODEBASES',
+        'projects.hint': '[CLIQUE NO CABEÇALHO PARA INSPECIONAR O BLUEPRINT]',
+        'p1.title': 'SUSANNA-Healthcheck (Assistente RAG SUS-DF)',
+        'p1.metrics': '383 UBSs | 237 Testes Automatizados',
+        'p1.desc': 'Assistente virtual de saúde pública desenvolvida no Challenge 1 da Residência em IA (Instituto ELDORADO / Lab Livre UnB Gama). Localiza 383 unidades básicas de saúde nas 33 Regiões Administrativas do DF por distância, recomenda vacinas segundo o PNI e gerencia lembretes clínicos. Atuei diretamente na engenharia e curadoria do corpus de dados públicos, validação de guardrails clínicos (bloqueio estrito de diagnósticos/posologia com orientação ao SAMU 192/UBS) e anonimização de PII (LGPD).',
+        'p1.link1': 'Repositório no GitHub →',
+        'p1.link2': 'Documentação & Fluxogramas →',
+        'p1.s3k': 'COBERTURA TESTES:',
+        'p1.s3v': '237 Testes Automatizados',
+        'p1.s4k': 'MINHA ATUAÇÃO:',
+        'p1.s4v': 'Eng. de Corpus & Guardrails',
+        'p2.title': 'Australian Rainfall Classifier & Classical ML Track',
+        'p2.metrics': 'RandomForest 84% Acc | 7.557 Registros',
+        'p2.desc': 'Pipeline supervisionado ponta a ponta para previsão de chuva em Melbourne sobre 7.557 registros históricos (2008–2017), com mitigação de vazamento temporal (data leakage), validação estratificada para classes desbalanceadas (76,3% / 23,7%) via StratifiedKFold e busca de hiperparâmetros com GridSearchCV. O RandomForestClassifier atingiu 84% de acurácia em teste (1.273 de 1.512 acertos) superando LogisticRegression (83%), destacando Humidity3pm como principal preditor. Integra a trilha IBM AI Engineering com scikit-learn, XGBoost e clustering (PCA, K-Means, DBSCAN).',
+        'p2.link1': 'Abrir Notebook Capstone →',
+        'p2.link2': 'Módulo Machine Learning (20 Labs) →',
+        'p2.s1k': 'PIPELINE ML:',
+        'p2.s2k': 'OTIMIZAÇÃO:',
+        'p2.s3k': 'DESEMPENHO:',
+        'p2.s3v': '84% Acc Teste (RandomForest)',
+        'p2.s4k': 'FEATURE CHAVE:',
+        'p3.metrics': 'Fila Persistente | Concorrência Isolada',
+        'p3.desc': 'Rede social e catálogo interativo para gamers inspirado no Letterboxd, desenvolvido como projeto integrador full stack. Conta com autenticação JWT, avaliações, listas, feed social e controle avançado de concorrência utilizando fila persistente em banco de dados, processamento assíncrono via worker em processo separado e resolução determinística de conflitos simultâneos validada por suíte de testes automatizados.',
+        'p3.link1': 'Repositório no GitHub →',
+        'p3.s2k': 'PERSISTÊNCIA:',
+        'p3.s3k': 'CONCORRÊNCIA:',
+        'p3.s3v': 'Worker Isolado + DB Queue',
+        'p3.s4v': 'React + Autenticação JWT',
+        'p4.metrics': 'YOLOv8 ONNX + fast-plate-ocr',
+        'p4.desc': 'Sistema de Visão Computacional voltado à segurança pública para detecção e reconhecimento automático de placas veiculares (padrão Mercosul e antigo) em frames de vídeo e imagens. Implementa detecção com YOLOv8 via ONNX Runtime, leitura OCR com fast-plate-ocr (CCT), quantização estática INT8 para inferência eficiente e processamento paralelo via ProcessPoolExecutor em Python.',
+        'p4.link1': 'Repositório no GitHub →',
+        'p4.s1k': 'DETECÇÃO:',
+        'p4.s2k': 'OCR & PADRÃO:',
+        'p4.s3k': 'OTIMIZAÇÃO:',
+        'p4.s3v': 'Quantização Estática INT8',
+        'p4.s4k': 'PARALELISMO:',
+        'p5.desc': 'Implementação prática de fluxos de trabalho com Agentes de IA e LLMs aplicados ao ciclo de engenharia de software, combinando os desafios do EDUCATHON (Instituto ELDORADO + IBM SkillsBuild com IBM watsonx) e a arquitetura de agentes certificada pela Oracle (LangChain, OpenAI Agent Stack e Model Context Protocol — MCP).',
+        'p5.link1': 'Credencial Oficial Oracle →',
+        'p5.link2': 'Repositório AI-Engineer-IBM →',
+        'p5.s1k': 'PROTOCOLOS:',
+        'p5.s2k': 'ORQUESTRAÇÃO:',
+        'p5.s3k': 'ECOSSISTEMAS:',
+        'p5.s4k': 'VALIDAÇÃO:',
+        'p5.s4v': 'Exame Oficial Oracle + Banca IBM',
+        'stack.hint': '[COMPETÊNCIAS TÉCNICAS VERIFICADAS]',
+        'stack.l1Title': 'Backend, APIs & Infraestrutura',
+        'stack.pytest': 'Pytest (Testes Automatizados)',
+        'stack.l2Title': 'Agentes de IA, LLMs & Governança',
+        'stack.guardrails': 'Guardrails Clínicos',
+        'stack.prompt': 'Engenharia de Prompts',
+        'stack.l3Title': 'Machine Learning Clássico & Visão',
+        'stack.l4Title': 'Recuperação Vetorial & Persistência',
+        'stack.rag': 'RAG Semântico',
+        'stack.corpus': 'Engenharia de Corpus',
+        'stack.pii': 'Anonimização PII / LGPD',
+        'stack.queues': 'Filas Persistentes',
+        't1.date': 'AGO 2026 — PRESENTE',
+        't1.badge': '● ATIVO // TEMPO INTEGRAL',
+        't1.role': 'Residente em Inteligência Artificial',
+        't1.org': 'Instituto de Pesquisas ELDORADO & Universidade de Brasília (UnB)',
+        't1.desc': 'Selecionado entre 150 vagas no programa presencial do Programa Brasileiro de IA (MCTI / Softex) no Lab Livre UnB Gama. Atuação prática em projetos reais sob metodologia Challenge-Based Learning (CBL), desenvolvendo sistemas com IA Generativa, RAG, bancos vetoriais, APIs em FastAPI e microsserviços Docker.',
+        't2.date': 'JUL 2025 — JUL 2026 (1 ANO 1 MÊS)',
+        't2.role': 'Estagiário de Suporte Técnico em TI',
+        't2.org': 'Procuradoria-Geral do Distrito Federal (PGDF)',
+        't2.desc': 'Atendimento técnico a procuradores e servidores do DF. Diagnóstico e resolução de incidentes de software, hardware e conectividade corporativa, gerenciamento de filas de chamados e cumprimento de SLAs via sistema GLPI com foco em comunicação clara e ágil.',
+        't3.date': 'FEV 2024 — JUL 2026 (CONCLUÍDO)',
+        't3.gpa': 'COEFICIENTE: 9,30 / 10',
+        't3.role': 'Tecnólogo em Análise e Desenvolvimento de Sistemas',
+        't3.descHtml': '<strong>Premiado como Melhor Aluno do Curso por 3 semestres consecutivos.</strong> Atuação prática na Fábrica de Software (SOFT-HUB) com engenharia de requisitos, análise orientada a objetos, prototipação e arquitetura de sistemas.',
+        't4.role': 'Certificações Oficiais & Fluência',
+        't4.org': 'Validação Internacional & Engenharia de Software',
+        't4.verify': 'Verificar ↗',
+        't4.engHtml': '<strong>Inglês C1 (Fluente):</strong> Curso Master Completo',
+        't4.ifrsHtml': '<strong>Eng. de Software:</strong> Gestão PMBOK (40h) &amp; Projeto de Sistemas',
+        'cta.titleHtml': 'PRONTO PARA SOMAR<br><span>NO SEU TIME DE IA.</span>',
+        'cta.email': 'Enviar E-mail →',
+        'cta.cv': 'Download CV (PDF) ↓',
+        'cta.copy': 'Copiar: samuca.9706@gmail.com',
+        'cta.linkedin': 'Conectar no LinkedIn ↗',
+        'footer.right': 'BRASÍLIA, DF & REMOTO // samuca.9706@gmail.com',
+        'toast.copied': 'E-MAIL COPIADO: samuca.9706@gmail.com'
+      },
+      en: {
+        metaTitle: 'SAMUEL RODRIGUES — AI & Software Engineer',
+        metaDesc: 'Samuel Rodrigues — Applied AI & Software Engineer | AI Resident (Instituto ELDORADO / UnB). RAG architectures, Classical ML, FastAPI, ChromaDB, and AI Agents.',
+        'nav.status': 'AI RESIDENT // ELDORADO · UnB',
+        'nav.projects': 'Projects',
+        'nav.stack': 'Stack',
+        'nav.trajectory': 'Trajectory',
+        'nav.contact': 'Contact',
+        'hero.badge': 'AI & SOFTWARE DEVELOPER',
+        'hero.meta1': '[AI RESIDENT @ ELDORADO / UnB]',
+        'hero.meta2': 'PYTHON · RAG · ML · FASTAPI · AGENTS',
+        'hero.meta3': 'BRASÍLIA, BR // REMOTE (ENGLISH C1)',
+        'hero.desc': 'Software Developer and AI Engineer currently an AI Resident at Instituto de Pesquisas ELDORADO in partnership with the University of Brasília (UnB). I build production Generative AI applications, Classical Machine Learning pipelines, semantic retrieval (RAG) systems, vector databases, and high-throughput APIs in Python and FastAPI.',
+        'hero.ctaProjects': 'Inspect Projects ↓',
+        'hero.ctaCv': 'Download CV (PDF) ↓',
+        'hero.ctaEmail': 'Copy Email',
+        'specs.resLabel': 'CURRENT RESIDENCY:',
+        'specs.degLabel': 'DEGREE (CS / ADS):',
+        'specs.degVal': 'GPA 9.3/10 (3x Top 1)',
+        'specs.certLabel': 'CERTIFICATION:',
+        'specs.langLabel': 'LANGUAGE:',
+        'specs.langVal': 'English C1 (Fluent)',
+        'projects.header': '01 // SELECTED ENGINEERING PROJECTS & CODEBASES',
+        'projects.hint': '[CLICK HEADER TO INSPECT TECHNICAL BLUEPRINT]',
+        'p1.title': 'SUSANNA-Healthcheck (SUS-DF RAG Assistant)',
+        'p1.metrics': '383 Clinics | 237 Automated Tests',
+        'p1.desc': 'Public-health virtual assistant built during Challenge 1 of the AI Residency (Instituto ELDORADO / Lab Livre UnB Gama). Locates 383 primary-care clinics across all 33 regions of Brasília by proximity, recommends PNI immunizations, and tracks clinical reminders. Contributed directly to public-data corpus engineering, strict clinical guardrails (blocking medical diagnoses/prescriptions and routing emergencies to SAMU 192), and LGPD PII anonymization.',
+        'p1.link1': 'GitHub Repository →',
+        'p1.link2': 'Docs & Flow Diagrams →',
+        'p1.s3k': 'TEST COVERAGE:',
+        'p1.s3v': '237 Automated Tests',
+        'p1.s4k': 'OWNERSHIP:',
+        'p1.s4v': 'Corpus Eng. & Guardrails',
+        'p2.title': 'Australian Rainfall Classifier & Classical ML Track',
+        'p2.metrics': 'RandomForest 84% Acc | 7,557 Records',
+        'p2.desc': 'End-to-end supervised Machine Learning pipeline forecasting next-day rainfall in Melbourne over 7,557 historical records (2008–2017), featuring temporal data-leakage mitigation, stratified validation across imbalanced classes (76.3% / 23.7%) via StratifiedKFold, and GridSearchCV hyperparameter tuning. RandomForestClassifier achieved 84% test accuracy (1,273 of 1,512 correct), outperforming LogisticRegression (83%), with Humidity3pm ranked as top predictor. Part of the IBM AI Engineering track covering scikit-learn, XGBoost, PCA, K-Means, and DBSCAN.',
+        'p2.link1': 'Open Capstone Notebook →',
+        'p2.link2': 'ML Track (20 Notebooks) →',
+        'p2.s1k': 'ML PIPELINE:',
+        'p2.s2k': 'TUNING:',
+        'p2.s3k': 'PERFORMANCE:',
+        'p2.s3v': '84% Test Acc (RandomForest)',
+        'p2.s4k': 'TOP FEATURE:',
+        'p3.metrics': 'Persistent Queue | Isolated Concurrency',
+        'p3.desc': 'Letterboxd-inspired social catalog platform for gamers built as a full-stack capstone project. Features JWT authentication, user reviews, custom lists, social feed, and deterministic concurrency control using a database-backed persistent queue processed by an isolated background worker, backed by automated test coverage.',
+        'p3.link1': 'GitHub Repository →',
+        'p3.s2k': 'PERSISTENCE:',
+        'p3.s3k': 'CONCURRENCY:',
+        'p3.s3v': 'Isolated Worker + DB Queue',
+        'p3.s4v': 'React + JWT Auth',
+        'p4.metrics': 'YOLOv8 ONNX + fast-plate-ocr',
+        'p4.desc': 'Computer Vision system designed for public-safety vehicle plate detection and recognition across Mercosul and legacy Brazilian plates from video frames and images. Implements YOLOv8 object detection via ONNX Runtime, optical character recognition with fast-plate-ocr (CCT), static INT8 quantization benchmarking, and Python ProcessPoolExecutor parallelism.',
+        'p4.link1': 'GitHub Repository →',
+        'p4.s1k': 'DETECTION:',
+        'p4.s2k': 'OCR & STANDARD:',
+        'p4.s3k': 'OPTIMIZATION:',
+        'p4.s3v': 'Static INT8 Quantization',
+        'p4.s4k': 'PARALLELISM:',
+        'p5.desc': 'Hands-on implementation of AI Agents and LLM workflows across the software engineering lifecycle, combining EDUCATHON challenges (Instituto ELDORADO + IBM SkillsBuild using IBM watsonx) with Oracle-certified agentic architectures built on LangChain, OpenAI Agent Stack, and Model Context Protocol (MCP).',
+        'p5.link1': 'Official Oracle Credential →',
+        'p5.link2': 'AI-Engineer-IBM Repository →',
+        'p5.s1k': 'PROTOCOLS:',
+        'p5.s2k': 'ORCHESTRATION:',
+        'p5.s3k': 'ECOSYSTEMS:',
+        'p5.s4k': 'VALIDATION:',
+        'p5.s4v': 'Oracle Exam + IBM Review Board',
+        'stack.hint': '[VERIFIED TECHNICAL SKILLS]',
+        'stack.l1Title': 'Backend, APIs & Infrastructure',
+        'stack.pytest': 'Pytest (Automated Testing)',
+        'stack.l2Title': 'AI Agents, LLMs & Governance',
+        'stack.guardrails': 'Clinical Guardrails',
+        'stack.prompt': 'Prompt Engineering',
+        'stack.l3Title': 'Classical ML, Tabular Data & Vision',
+        'stack.l4Title': 'Vector Retrieval & Persistence',
+        'stack.rag': 'Semantic RAG',
+        'stack.corpus': 'Corpus Engineering',
+        'stack.pii': 'PII Anonymization / LGPD',
+        'stack.queues': 'Persistent Queues',
+        't1.date': 'AUG 2026 — PRESENT',
+        't1.badge': '● ACTIVE // FULL-TIME',
+        't1.role': 'Artificial Intelligence Resident',
+        't1.org': 'Instituto de Pesquisas ELDORADO & University of Brasília (UnB)',
+        't1.desc': 'Selected among 150 cohorts in Brazil’s National AI Residency Program (MCTI / Softex) at Lab Livre UnB Gama. Delivering real-world Challenge-Based Learning (CBL) software spanning Generative AI, RAG pipelines, vector stores, FastAPI microservices, and Docker containers.',
+        't2.date': 'JUL 2025 — JUL 2026 (1 YR 1 MO)',
+        't2.role': 'IT Technical Support Intern',
+        't2.org': 'Attorney General’s Office of the Federal District (PGDF)',
+        't2.desc': 'Provided enterprise technical support for public attorneys and staff. Diagnosed software, hardware, and network incidents while managing ticket queues and SLAs via GLPI with fast, clear communication.',
+        't3.date': 'FEB 2024 — JUL 2026 (COMPLETED)',
+        't3.gpa': 'GPA: 9.30 / 10',
+        't3.role': 'B.Tech. in Systems Analysis & Development (ADS)',
+        't3.descHtml': '<strong>Awarded Best Student in the Cohort for 3 consecutive semesters.</strong> Practical software-factory delivery (SOFT-HUB) covering requirements engineering, OOP design, prototyping, and system architecture.',
+        't4.role': 'Official Certifications & Fluency',
+        't4.org': 'International Validation & Software Engineering',
+        't4.verify': 'Verify ↗',
+        't4.engHtml': '<strong>English C1 (Fluent):</strong> Master Diploma',
+        't4.ifrsHtml': '<strong>Software Eng.:</strong> PMBOK Management (40h) &amp; Systems Design',
+        'cta.titleHtml': 'READY TO SHIP IMPACT<br><span>ON YOUR AI TEAM.</span>',
+        'cta.email': 'Send Email →',
+        'cta.cv': 'Download CV (PDF) ↓',
+        'cta.copy': 'Copy: samuca.9706@gmail.com',
+        'cta.linkedin': 'Connect on LinkedIn ↗',
+        'footer.right': 'BRASÍLIA, BR & REMOTE // samuca.9706@gmail.com',
+        'toast.copied': 'EMAIL COPIED: samuca.9706@gmail.com'
+      }
+    };
+
+    let currentLang = 'pt';
+
+    function detectInitialLang() {
+      const param = new URLSearchParams(window.location.search).get('lang');
+      if (param && (param.toLowerCase() === 'en' || param.toLowerCase() === 'pt')) {
+        return param.toLowerCase();
+      }
+      try {
+        const saved = localStorage.getItem('portfolio_lang');
+        if (saved === 'en' || saved === 'pt') return saved;
+      } catch (e) {}
+      return 'pt';
+    }
+
+    function setLanguage(lang, updateUrl = true) {
+      const dict = I18N[lang] || I18N.pt;
+      currentLang = lang === 'en' ? 'en' : 'pt';
+      document.documentElement.lang = currentLang === 'en' ? 'en' : 'pt-BR';
+      document.title = dict.metaTitle;
+      const metaDesc = document.getElementById('meta-desc');
+      if (metaDesc) metaDesc.setAttribute('content', dict.metaDesc);
+
+      const textEls = document.querySelectorAll('[data-i18n]');
+      for (let i = 0; i < textEls.length; i++) {
+        const key = textEls[i].getAttribute('data-i18n');
+        if (dict[key] !== undefined) textEls[i].textContent = dict[key];
+      }
+
+      const htmlEls = document.querySelectorAll('[data-i18n-html]');
+      for (let i = 0; i < htmlEls.length; i++) {
+        const key = htmlEls[i].getAttribute('data-i18n-html');
+        if (dict[key] !== undefined) htmlEls[i].innerHTML = dict[key];
+      }
+
+      const langBtns = document.querySelectorAll('.lang-btn');
+      for (let i = 0; i < langBtns.length; i++) {
+        const active = langBtns[i].getAttribute('data-lang') === currentLang;
+        langBtns[i].classList.toggle('active', active);
+        langBtns[i].setAttribute('aria-pressed', active ? 'true' : 'false');
+      }
+
+      try { localStorage.setItem('portfolio_lang', currentLang); } catch (e) {}
+      if (updateUrl && window.history && window.history.replaceState) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', currentLang);
+        window.history.replaceState({}, '', url.toString());
+      }
+    }
+
+    setLanguage(detectInitialLang(), false);
+
+    // ==========================================
     // INTERAÇÃO ACORDEÃO (Expansão de Blueprint)
     // ==========================================
-    function toggleRow(row) {
+    function toggleRow(trigger) {
+      const row = trigger.closest ? trigger.closest('.project-row') : trigger;
+      if (!row) return;
       const isExpanded = row.classList.contains('expanded');
       const rows = document.querySelectorAll('.project-row');
       for (let i = 0; i < rows.length; i++) {
         rows[i].classList.remove('expanded');
         rows[i].querySelector('.p-toggle').textContent = '[EXPAND +]';
+        const btn = rows[i].querySelector('.row-header');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
       }
       if (!isExpanded) {
         row.classList.add('expanded');
         row.querySelector('.p-toggle').textContent = '[COLLAPSE -]';
+        const btn = row.querySelector('.row-header');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
       }
     }
 
@@ -1092,16 +1529,28 @@
       for (let i = 0; i < rows.length; i++) {
         const match = category === 'all' || rows[i].getAttribute('data-cat') === category;
         rows[i].style.display = match ? 'block' : 'none';
+        if (!match && rows[i].classList.contains('expanded')) {
+          rows[i].classList.remove('expanded');
+          rows[i].querySelector('.p-toggle').textContent = '[EXPAND +]';
+          const hdr = rows[i].querySelector('.row-header');
+          if (hdr) hdr.setAttribute('aria-expanded', 'false');
+        }
       }
     }
 
     // Copiar Contato para Clipboard com Toast
     function copyContact() {
-      navigator.clipboard.writeText('samuca.9706@gmail.com').then(() => {
+      const showToast = () => {
         const toast = document.getElementById('toast');
+        toast.textContent = I18N[currentLang]['toast.copied'];
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2500);
-      });
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText('samuca.9706@gmail.com').then(showToast).catch(showToast);
+      } else {
+        showToast();
+      }
     }
 
     // ==========================================
@@ -1149,9 +1598,11 @@
 
     let lastTime = performance.now();
     let frameCount = 0;
+    let clearFrameTick = 0;
 
     function render(currentTime) {
       frameCount++;
+      clearFrameTick++;
       if (currentTime - lastTime >= 1000) {
         if (telFps) telFps.textContent = frameCount;
         frameCount = 0;
@@ -1173,9 +1624,15 @@
       const mx = mouse.x;
       const my = mouse.y;
 
-      // Fade suave do rastro
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
-      ctx.fillRect(0, 0, w, h);
+      // Limpeza periódica para zerar resíduo de quantização em canal 8-bit
+      if (clearFrameTick >= 240) {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+        clearFrameTick = 0;
+      } else {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.26)';
+        ctx.fillRect(0, 0, w, h);
+      }
 
       // Passo 1: Batch de vetores ambientes (1 única chamada de rasterização GPU)
       ctx.beginPath();

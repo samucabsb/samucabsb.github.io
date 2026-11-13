@@ -10,7 +10,8 @@ Portfólio técnico construído sob a estética **Swiss Brutalism & Latent Tenso
 
 | Camada | Implementação Técnica |
 | :--- | :--- |
-| **Pegada de Rede (Payload)** | `39 KB` arquivo único (`~7.2 KB` Gzip) • `FCP < 15ms` |
+| **Pegada de Rede (Payload)** | Arquivo único em Vanilla HTML5/CSS/JS + Open Graph (`assets/og-cover.png`) + CV (`assets/Samuel-Rodrigues-CV.pdf`) |
+| **Internacionalização (i18n)** | Alternância instantânea **`PT-BR / EN`** via header (`?lang=en` / `?lang=pt` + `localStorage`) |
 | **Dependências Externas** | `0` pacotes npm • `0` frameworks JS • `100%` Vanilla HTML5 / CSS Grid / Canvas 2D |
 | **Motor Gráfico (Canvas 2D)** | Campo vetorial contínuo $\theta(x,y,t) = (\sin(kx + \omega_x t) + \cos(ky + \omega_y t))\pi$ com vórtice interativo |
 | **Otimização de GPU** | *Batched Path Rendering*: `140` vetores agrupados em apenas **`2` draw calls (`ctx.stroke()`) por frame** |
